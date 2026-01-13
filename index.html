@@ -141,44 +141,36 @@
             color: rgba(26, 26, 26, 0.95);
         }
         
-        .units-list { 
-            margin: 12px 0 0 20px; 
-            list-style: decimal;
+        .units-list {
+            margin: 12px 0 0 20px;
+            list-style: none;
+            counter-reset: item;
         }
-        
-        .units-list li { 
-            margin-bottom: 8px; 
+
+        .units-list li {
+            margin-bottom: 8px;
             line-height: 1.7;
+            counter-increment: item;
+            position: relative;
+            padding-left: 0;
         }
-        
-        .note-box { 
-            background: #fff5f5; 
-            border-left: 3px solid #dc2626; 
-            padding: 16px 18px; 
-            margin: 18px 0 0 0; 
-            font-size: 0.92em; 
-            line-height: 1.7; 
-            color: #991b1b;
-        }
-        
-        .process-steps { 
-            margin-top: 12px; 
-        }
-        
-        .process-step { 
-            margin-bottom: 12px; 
-            line-height: 1.7;
-        }
-        
-        .process-step:last-child {
-            margin-bottom: 0;
-        }
-        
-        .process-step-label { 
-            font-weight: 700; 
+
+        .units-list li::before {
+            content: counter(item) ". ";
+            font-weight: 700;
             color: rgba(26, 26, 26, 0.95);
         }
         
+        .note-box {
+            background: #fff5f5;
+            border-left: 3px solid #dc2626;
+            padding: 16px 18px;
+            margin: 18px 0 0 0;
+            font-size: 0.92em;
+            line-height: 1.7;
+            color: #991b1b;
+        }
+
         .theoretical-framework { margin-top: 8px; }
         
         .theory-list { display: grid; gap: 10px; }
@@ -248,7 +240,6 @@
             .links { align-items: flex-start; }
             .link-item a { min-height: 48px; line-height: 48px; }
             .approach-content { font-size: 0.95em; }
-            .process-step { font-size: 0.95em; }
             .units-list { margin-left: 18px; font-size: 0.95em; }
             .contributions-text { font-size: 1em; }
         }
@@ -295,7 +286,7 @@
             <div class="two-col-section">
                 <div class="section-label">Objective</div>
                 <div class="section-body">
-                     To develop a preliminary ontology that maps and categorizes how normative roles are designed, implemented, and operationalized within multi-agent LLM simulations.
+                     To develop a preliminary ontology of normative role design in multi-agent LLM simulations—mapping how roles are operationalized and how they shape outcomes.
                 </div>
             </div>
 
@@ -313,7 +304,7 @@
             <div class="question-block">
                 <div class="question-label">Main Research Question</div>
                 <div class="question-text">
-                    What types of normative roles are operationalized across different applications of multi-agent systems?
+                    How are normative roles designed and operationalized across different applications of multi-agent LLM systems?
                 </div>
             </div>
             
@@ -334,17 +325,11 @@
 
                     <div class="approach-item">
                         <div class="approach-label">Analytical Process:</div>
-                        <div class="process-steps">
-                            <div class="process-step">
-                                <span class="process-step-label">1. Systematic Literature Review</span> – Search, identify and select multi-agent LLM simulation studies as the foundation for shaping the ontology
-                            </div>
-                            <div class="process-step">
-                                <span class="process-step-label">2. Five-Layer Coding</span> – Code each study across: (a) Study Context, (b) Simulation setup, (c) Normative Design (role types, methods, ethics), (d) Outcomes (behaviours, metrics), (e) Evidence (prompts, contradictions)
-                            </div>
-                            <div class="process-step">
-                                <span class="process-step-label">3. Ontology Construction</span> – Formalize findings as knowledge triples (subject-relation-object) to map role types, prompting methods, ethical framings, and their relationships to outcomes
-                            </div>
-                        </div>
+                        <ol class="units-list">
+                            <li><strong>Systematic Literature Review</strong> — Search, identify and select multi-agent LLM simulation studies as the foundation for shaping the ontology</li>
+                            <li><strong>Five-Layer Coding</strong> — Code each study across: (a) Study Context, (b) Simulation setup, (c) Normative Design (role types, methods, ethics), (d) Outcomes (behaviours, metrics), (e) Evidence (prompts, contradictions)</li>
+                            <li><strong>Ontology Construction</strong> — Formalize findings as knowledge triples (subject-relation-object) to map role types, prompting methods, ethical framings, and their relationships to outcomes</li>
+                        </ol>
                     </div>
                 </div>
             </div>

@@ -1,364 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulated Norms - Thesis One-Pager</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        html {
-            -webkit-text-size-adjust: 100%;
-            -ms-text-size-adjust: 100%;
-        }
-        
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #fafafa url('https://i.imgur.com/YourImageURL.jpg') center/cover fixed;
-            color: rgba(26, 26, 26, 0.95);
-            animation: fadeIn 0.6s ease-in;
-            padding: 30px 20px;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        .container { 
-            max-width: 900px; 
-            margin: 0 auto; 
-            background: #fff;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-            border-radius: 8px;
-            overflow: hidden;
-            width: 100%;
-        }
-        
-        .hero {
-            background: #140b22;
-            color: #fff; padding: 50px 50px 40px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: repeating-linear-gradient(
-                45deg,
-                transparent,
-                transparent 10px,
-                rgba(255,255,255,0.01) 10px,
-                rgba(255,255,255,0.01) 20px
-            );
-            pointer-events: none;
-        }
-        .title { font-size: 2.3em; font-weight: 700; line-height: 1.2; margin-bottom: 12px; letter-spacing: -0.01em; font-family: 'Playfair Display', serif; position: relative; z-index: 1; }
-        .subtitle { font-size: 0.92em; color: #d4c5f9; font-style: italic; font-weight: 400; letter-spacing: 0.02em; position: relative; z-index: 1; }
-        .subtitle a { color: #d4c5f9; text-decoration: underline; }
-        
-        .content { padding: 40px 50px 15px; }
-
-        .intro { font-size: 1.1em; line-height: 1.7; color: rgba(45, 45, 45, 0.95); }
-        
-        .question-block {
-            background: #f8f8f8; padding: 24px 40px; margin: 32px 0; border-left: 4px solid #140b22;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .question-block:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(20,11,34,0.15);
-        }
-        .question-label {
-            font-size: 1.05em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: #5d4e8c; margin-bottom: 12px;
-        }
-        .question-text { font-size: 1.05em; font-style: italic; line-height: 1.5; color: rgba(26, 26, 26, 0.95); }
-        
-        .two-col-section { display: flex; flex-direction: column; gap: 8px; margin-bottom: 32px; }
-        .section-label {
-            font-size: 1.05em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: #5d4e8c; margin-bottom: 12px;
-        }
-        .section-body { font-size: 0.98em; line-height: 1.75; color: rgba(51, 51, 51, 0.95); }
-        
-        .mechanisms-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin: 18px 0; }
-        .mechanism-card { 
-            background: #f8f7fa; 
-            padding: 20px; 
-            border-radius: 4px;
-            border: 1px solid #e8e6ed;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        .mechanism-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 16px rgba(20,11,34,0.1);
-            border-color: #140b22;
-            background: #fff;
-        }
-        .mechanism-title { font-weight: 700; color: rgba(26, 26, 26, 0.95); margin-bottom: 8px; font-size: 0.95em; }
-        .mechanism-desc { font-size: 0.88em; color: rgba(102, 102, 102, 0.95); line-height: 1.5; }
-        
-        .design-note { font-size: 0.92em; color: rgba(102, 102, 102, 0.95); margin-top: 16px; font-style: italic; }
-        
-        .approach-item { 
-            margin-bottom: 18px; 
-        }
-        
-        .approach-item:first-child {
-            margin-top: 0;
-        }
-        
-        .approach-item:last-child {
-            margin-bottom: 0;
-        }
-        
-        .approach-label { 
-            font-weight: 700; 
-            font-size: 1.0em; 
-            margin-bottom: 8px; 
-            color: rgba(26, 26, 26, 0.95);
-        }
-        
-        .approach-content { 
-            font-size: 0.98em; 
-            line-height: 1.75; 
-            color: rgba(51, 51, 51, 0.95);
-        }
-        
-        .approach-content strong {
-            font-weight: 700;
-            color: rgba(26, 26, 26, 0.95);
-        }
-        
-        .units-list {
-            margin: 12px 0 0 20px;
-            list-style: none;
-            counter-reset: item;
-        }
-
-        .units-list li {
-            margin-bottom: 8px;
-            line-height: 1.7;
-            counter-increment: item;
-            position: relative;
-            padding-left: 0;
-        }
-
-        .units-list li::before {
-            content: counter(item) ". ";
-            font-weight: 700;
-            color: rgba(26, 26, 26, 0.95);
-        }
-        
-        .note-box {
-            background: #fff5f5;
-            border-left: 3px solid #dc2626;
-            padding: 16px 18px;
-            margin: 18px 0 0 0;
-            font-size: 0.92em;
-            line-height: 1.7;
-            color: #991b1b;
-        }
-
-        .theoretical-framework { margin-top: 8px; }
-        
-        .theory-list { display: grid; gap: 10px; }
-        .theory-item { display: flex; gap: 12px; }
-        .theory-bullet { width: 6px; height: 6px; background: #140b22; border-radius: 50%; margin-top: 10px; flex-shrink: 0; }
-        .theory-content { flex: 1; }
-        .theory-title { font-weight: 700; color: rgba(26, 26, 26, 0.95); display: inline; }
-        .theory-text  { color: rgba(51, 51, 51, 0.95); display: inline; line-height: 1.7; }
-        
-        .contributions { background: #140b22; color: #fff; padding: 20px 50px 35px; margin-top: 0; }
-        .contributions-title { font-size: 0.95em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: #d4c5f9; margin-bottom: 16px; }
-        .contributions-text { font-size: 1.05em; line-height: 1.7; margin-bottom: 24px; }
-        .deliverables { font-size: 0.9em; opacity: 0.75; line-height: 1.6; }
-        .deliverables strong { opacity: 1; font-weight: 600; }
-        
-        .footer { background: #fafafa; padding: 35px 50px; display: flex; justify-content: space-between; align-items: center; }
-        .author-block { flex: 1; }
-        .author-name { font-size: 1.05em; font-weight: 700; color: rgba(26, 26, 26, 0.95); margin-bottom: 8px; }
-        .author-details { font-size: 0.9em; color: rgba(102, 102, 102, 0.95); line-height: 1.6; }
-        .links { display: flex; flex-direction: column; gap: 10px; align-items: flex-end; }
-        .link-item { font-size: 0.9em; }
-        .link-item a { 
-            color: rgba(26, 26, 26, 0.95); 
-            text-decoration: none; 
-            border-bottom: 2px solid #140b22; 
-            padding-bottom: 2px; 
-            transition: all 0.2s ease;
-            display: inline-block;
-            min-height: 44px;
-            line-height: 44px;
-        }
-        .link-item a:hover { 
-            color: #140b22;
-            border-bottom-color: transparent;
-            transform: translateY(-1px);
-        }
-        .contact-links { font-size: 0.88em; color: rgba(102, 102, 102, 0.95); }
-        .contact-links a { 
-            color: rgba(26, 26, 26, 0.95); 
-            text-decoration: none; 
-            border-bottom: 1px solid #999;
-            transition: all 0.2s ease;
-            padding: 8px 0;
-            display: inline-block;
-        }
-        .contact-links a:hover { 
-            color: #140b22;
-            border-bottom-color: #140b22;
-        }
-        
-        @media (max-width: 768px) {
-            body { padding: 15px 10px; }
-            .container { box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-radius: 6px; }
-            .hero { padding: 30px 25px 25px; }
-            .title { font-size: 1.6em; line-height: 1.3; }
-            .subtitle { font-size: 0.85em; }
-            .content { padding: 30px 25px 15px; }
-            .contributions { padding: 25px 25px 30px; }
-            .footer { padding: 25px 25px; flex-direction: column; align-items: flex-start; gap: 20px; }
-            .two-col-section { display: flex; flex-direction: column; gap: 8px; margin-bottom: 28px; }
-            .section-label { font-size: 0.95em; }
-            .section-body { font-size: 0.95em; }
-            .question-block { padding: 20px 25px; margin: 28px 0; }
-            .question-label { font-size: 0.95em; }
-            .question-text { font-size: 1em; }
-            .mechanisms-grid { grid-template-columns: 1fr; }
-            .links { align-items: flex-start; }
-            .link-item a { min-height: 48px; line-height: 48px; }
-            .approach-content { font-size: 0.95em; }
-            .units-list { margin-left: 18px; font-size: 0.95em; }
-            .contributions-text { font-size: 1em; }
-        }
-        
-        @media (max-width: 480px) {
-            body { padding: 10px 5px; }
-            .container { box-shadow: 0 5px 20px rgba(0,0,0,0.08); border-radius: 4px; }
-            .hero { padding: 25px 20px 20px; }
-            .title { font-size: 1.4em; }
-            .content { padding: 25px 20px 15px; }
-            .contributions { padding: 20px 20px 25px; }
-            .footer { padding: 20px 20px; }
-            .question-block { padding: 18px 20px; }
-            .section-label { font-size: 0.9em; }
-        }
-        
-        @media print {
-            body { background: #fff; }
-            .hero { background: #140b22; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-        }
-
-        .section-sep { border-top: 1px solid #e6e6e6; margin: 32px 0 24px 0; }
-
-        h1, h2, h3, h4 { margin-top: 0.6em; margin-bottom: 0.4em; }
-        p { margin-top: 0.4em; margin-bottom: 0.6em; }
-        ul, ol { margin-top: 0.4em; margin-bottom: 0.6em; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulated Norms: Ontology of Normative Role Design in Multi‑Agent LLM Simulations</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <header class="hero">
     <div class="container">
-        <div class="hero">
-            <div class="title">Towards an Ontology of Normative Role Design for LLM interactions in Multi-Agent Simulations</div>
-            <div class="subtitle">Work-in-progress master's thesis · related <a href="https://mohsen-hn.com/assets/Ontology_of_normative_design.pdf" target="_blank" rel="noopener noreferrer">paper</a> accepted for WorldCist'26 conference</div>
-        </div>
-        
-        <div class="content">
-            <div class="two-col-section">
-                <div class="section-label">The Central Problem</div>
-                <div class="section-body">
-                     Large language models are evolving into autonomous agents increasingly deployed in multi-agent systems. A key mechanism for designing such agents is the normative roles encoded into their system prompts, which define behavioral expectations. However, the development and evaluation of these roles remain ad hoc and unsystematic, guided by trial-and-error rather than coherent principles. The field lacks a shared vocabulary and standardized methods, making it difficult to evaluate how norms are encoded and what effects they produce.
-                </div>
-            </div>
-
-            <div class="two-col-section">
-                <div class="section-label">Objective</div>
-                <div class="section-body">
-                     To develop a preliminary ontology of normative role design in multi-agent LLM simulations—mapping how roles are operationalized and how they shape outcomes.
-                </div>
-            </div>
-
-            <div class="two-col-section">
-                <div class="section-label">Why it Matters</div>
-                <div class="section-body">
-                     <ol class="units-list">
-                         <li><strong>AI agents are being deployed in critical domains:</strong> From energy grids and supply chains to healthcare and education.</li>
-                         <li><strong>Design choices encode norms:</strong> How we prompt and structure agents shapes their decision-making and societal impact.</li>
-                         <li><strong>Scale amplifies risk:</strong> These systems operate at massive scale, affecting millions of users and real-world outcomes.</li>
-                     </ol>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question-label">Main Research Question</div>
-                <div class="question-text">
-                    How are normative roles designed and operationalized across different applications of multi-agent LLM systems?
-                </div>
-            </div>
-            
-            <div class="two-col-section">
-                <div class="section-label">Research Approach</div>
-                <div class="section-body">
-                    <div class="approach-item">
-                        <div class="approach-content"><strong>Input:</strong> Multi-agent LLM simulation papers and their GitHub repositories.</div>
-                    </div>
-
-                    <div class="approach-item">
-                        <div class="approach-label">Units of Analysis:</div>
-                        <ol class="units-list">
-                            <li><strong>System Prompts (core object)</strong> — Natural language role instructions embedded in model's code base</li>
-                            <li><strong>Simulation Papers</strong> — Contextual data: simulation domain, architecture, evaluation, outcomes</li>
-                        </ol>
-                    </div>
-
-                    <div class="approach-item">
-                        <div class="approach-label">Analytical Process:</div>
-                        <ol class="units-list">
-                            <li><strong>Systematic Literature Review</strong> — Search, identify and select multi-agent LLM simulation studies as the foundation for shaping the ontology</li>
-                            <li><strong>Five-Layer Coding</strong> — Code each study across: (a) Study Context, (b) Simulation setup, (c) Normative Design (role types, methods, ethics), (d) Outcomes (behaviours, metrics), (e) Evidence (prompts, contradictions)</li>
-                            <li><strong>Ontology Construction</strong> — Formalize findings as knowledge triples (subject-relation-object) to map role types, prompting methods, ethical framings, and their relationships to outcomes</li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="contributions">
-            <div class="contributions-title">Deliverables</div>
-            <div class="contributions-text">
-                Master's Thesis · Conceptual Ontology · Academic Articles · Policy & Design Briefs · Workshops
-            </div>
-        </div>
-
-        <div class="footer">
-            <div class="author-block">
-                <div class="author-name">Mohsen Hassan Nejad</div>
-                <div class="author-details">
-                    Master's in Artificial Intelligence for Sustainable Societies (AISS)<br>
-                    Erasmus Mundus Scholarship · 2025-2026
-                </div>
-            </div>
-            <div class="links">
-                <div class="contact-links">
-                    <a href="https://github.com/TechNejad">GitHub</a> · 
-                    <a href="mailto:mohsen.nejad94@gmail.com">Email</a> · 
-                    <a href="https://www.linkedin.com/in/mohsenhassannejad/">LinkedIn</a>
-                </div>
-            </div>
-        </div>
+      <h1 class="hero-title">Simulated Norms: Ontology of Normative Role Design for LLMs in Multi‑Agent Simulations</h1>
+      <p class="authors">
+        <a href="https://mohsen-hassan-nejad.netlify.app/" target="_blank" rel="noopener">Mohsen Hassan Nejad</a>
+      </p>
+      <p class="affiliation">Erasmus Mundus Joint Master's Scholarship in Artificial Intelligence for Sustainable Societies (AISS) – Ongoing thesis (2025–2026)</p>
+      <div class="buttons">
+        <a href="one-pager/index.html" class="btn" target="_blank" rel="noopener">One‑Pager Summary</a>
+        <a href="conference.html" class="btn" rel="noopener">Conference Paper</a>
+      </div>
     </div>
+  </header>
+
+  <main>
+    <section id="abstract" class="section">
+      <div class="container">
+        <h2>Abstract</h2>
+        <p>
+          <strong>Simulated Norms</strong> is an ongoing master's thesis exploring how normative roles for large language models are defined and
+          operationalized within multi‑agent simulations. As LLMs evolve into autonomous agents, their roles are encoded via system prompts, yet
+          development and evaluation remain ad hoc and unsystematic. This project aims to develop a preliminary ontology of normative role
+          design by mapping how roles are operationalized and how they shape outcomes.
+        </p>
+      </div>
+    </section>
+
+    <section id="approach" class="section alt">
+      <div class="container">
+        <h2>Research Approach</h2>
+        <ul>
+          <li><strong>Systematic Literature Review.</strong> Identify and analyse multi‑agent LLM simulation studies and their code to build
+            the foundation of the ontology.</li>
+          <li><strong>Five‑Layer Coding.</strong> Code each study across: (a) study context, (b) simulation setup, (c) normative design
+            (role types, methods, ethics), (d) outcomes (behaviours, metrics) and (e) evidence (prompts, contradictions).</li>
+          <li><strong>Ontology Construction.</strong> Formalise findings as knowledge triples to map role types, prompting methods,
+            ethical framings and their relationships to outcomes.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
 </body>
 </html>

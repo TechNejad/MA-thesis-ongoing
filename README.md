@@ -8,11 +8,10 @@
 **Ongoing thesis (2025-2026)**
 
 <p>
-  <a href="https://technejad.github.io/MA-thesis-ongoing/one-pager/"><img alt="One-Pager Summary" src="https://img.shields.io/badge/One--Pager%20Summary-253246?style=flat&labelColor=253246&color=253246"></a>
-  <a href="https://technejad.github.io/MA-thesis-ongoing/conference.html"><img alt="Conference Paper" src="https://img.shields.io/badge/Conference%20Paper-253246?style=flat&labelColor=253246&color=253246"></a>
+  <a href="https://technejad.github.io/MA-thesis-ongoing/"><img alt="Research Homepage" src="https://img.shields.io/badge/Research%20Homepage-253246?style=for-the-badge"></a>
+  <a href="https://technejad.github.io/MA-thesis-ongoing/one-pager/"><img alt="One-Pager Summary" src="https://img.shields.io/badge/One--Pager%20Summary-253246?style=for-the-badge"></a>
+  <a href="https://technejad.github.io/MA-thesis-ongoing/conference.html"><img alt="Conference Page" src="https://img.shields.io/badge/Conference%20Page-253246?style=for-the-badge"></a>
 </p>
-
-<sub><a href="https://technejad.github.io/MA-thesis-ongoing/">Research Homepage</a> · <a href="https://mohsen-hn.com/assets/Ontology_of_normative_design.pdf">Direct PDF</a></sub>
 
 </div>
 

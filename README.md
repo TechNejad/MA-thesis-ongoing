@@ -1,6 +1,6 @@
 <div align="center">
 
-# Simulated Norms: Ontology of Normative Role Design for LLMs in Multi-Agent Simulations
+# Towards an Ontology of Normative Role Design for LLM interactions in Multi-Agent Simulations
 
 ### [Mohsen Hassan Nejad](https://mohsen-hassan-nejad.netlify.app/)
 
@@ -18,7 +18,7 @@
 
 ## Abstract
 
-**Simulated Norms** is an ongoing master's thesis exploring how normative roles for large language models are defined and operationalized within multi-agent simulations. As LLMs evolve into autonomous agents, their roles are encoded through system prompts, yet their development and evaluation remain ad hoc and unsystematic. This project aims to develop a preliminary ontology of normative role design by mapping how roles are operationalized and how they shape outcomes.
+Ongoing master's thesis exploring how normative roles for large language models are defined and operationalized within multi-agent simulations. As LLMs evolve into autonomous agents, their roles are encoded through system prompts, yet their development and evaluation remain ad hoc and unsystematic. This project aims to develop a preliminary ontology of normative role design by mapping how roles are operationalized and how they shape outcomes.
 
 ## Research Approach
 

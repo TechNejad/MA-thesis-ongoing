@@ -5,6 +5,51 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Towards an Ontology of Normative Role Design for LLM interactions in Multi-Agent Simulations</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .demo-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .demo-intro {
+      max-width: 720px;
+    }
+
+    .demo-frame-wrap {
+      border: 1px solid #d8dce3;
+      border-radius: 18px;
+      overflow: hidden;
+      background: #0d1117;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+    }
+
+    .demo-frame {
+      display: block;
+      width: 100%;
+      height: 560px;
+      border: 0;
+      background: #0d1117;
+    }
+
+    @media (max-width: 768px) {
+      .demo-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .demo-frame {
+        height: 460px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .demo-frame {
+        height: 360px;
+      }
+    }
+  </style>
 </head>
 <body>
   <header class="hero">
@@ -45,6 +90,29 @@
           <li><strong>Ontology Construction.</strong> Formalise findings as knowledge triples to map role types, prompting methods,
             ethical framings and their relationships to outcomes.</li>
         </ul>
+      </div>
+    </section>
+
+    <section id="demo" class="section">
+      <div class="container">
+        <div class="demo-header">
+          <div>
+            <h2>Experimental Demo</h2>
+            <p class="demo-intro">
+              Interactive ontology map embedded directly in the page. It can also be opened in its own tab for a larger view.
+            </p>
+          </div>
+          <a href="ontology-map.html" class="btn" target="_blank" rel="noopener">Open Full Demo</a>
+        </div>
+
+        <div class="demo-frame-wrap">
+          <iframe
+            src="ontology-map.html"
+            title="Ontology map experimental demo"
+            class="demo-frame"
+            loading="lazy">
+          </iframe>
+        </div>
       </div>
     </section>
   </main>

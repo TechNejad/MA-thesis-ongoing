@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ontology of Normative Role Design — Mind Map</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: #0d1117; color: #c9d1d9; overflow: hidden; }
+
+  #canvas { width: 100vw; height: 100vh; }
+
+  /* Tooltip */
+  #tooltip {
+    position: fixed; pointer-events: none; opacity: 0;
+    background: #161b22; border: 1px solid #30363d; border-radius: 8px;
+    padding: 12px 16px; max-width: 380px; font-size: 13px; line-height: 1.5;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4); z-index: 100;
+    transition: opacity 0.15s;
+  }
+  #tooltip.visible { opacity: 1; }
+  #tooltip .tt-title { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+  #tooltip .tt-class { font-size: 11px; opacity: 0.6; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  #tooltip .tt-def { font-size: 12px; opacity: 0.85; }
+  #tooltip .tt-papers { font-size: 11px; opacity: 0.5; margin-top: 6px; }
+
+  /* Legend */
+  #legend {
+    position: fixed; bottom: 20px; left: 20px; background: #161b22ee;
+    border: 1px solid #30363d; border-radius: 10px; padding: 16px 20px;
+    font-size: 12px; zindex: 50;
+  }
+  #legend h3 { font-size: 13px; margin-bottom: 10px; color: #58a6ff; }
+  .legend-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+
+  /* Controls */
+  #controls {
+    position: fixed; top: 20px; right: 20px; background: #161b22ee;
+    border: 1px solid #30363d; border-radius: 10px; padding: 16px 20px;
+    font-size: 12px; z-index: 50; max-width: 260px;
+  }
+  #controls h3 { font-size: 13px; margin-bottom: 10px; color: #58a6ff; }
+  .filter-btn {
+    display: inline-block; padding: 4px 10px; margin: 2px; border-radius: 12px;
+    background: #21262d; border: 1px solid #30363d; color: #8b949e; cursor: pointer;
+    font-size: 11px; transition: all 0.15s;
+  }
+  .filter-btn:hover, .filter-btn.active { background: #30363d; color: #f0f6fc; border-color: #58a6ff; }
+
+  /* Title */
+  #title {
+    position: fixed; top: 20px; left: 20px; z-index: 50;
+  }
+  #title h1 { font-size: 18px; font-weight: 700; color: #f0f6fc; }
+  #title p { font-size: 12px; opacity: 0.5; margin-top: 4px; }
+
+  /* Info panel */
+  #info-panel {
+    position: fixed; right: 20px; bottom: 20px; background: #161b22ee;
+    border: 1px solid #30363d; border-radius: 10px; padding: 16px 20px;
+    font-size: 12px; z-index: 50; max-width: 320px; display: none;
+  }
+  #info-panel.visible { display: block; }
+  #info-panel h3 { font-size: 14px; margin-bottom: 8px; }
+  #info-panel .relation-list { margin-top: 8px; }
+  #info-panel .rel-item {
+    padding: 4px 0; border-bottom: 1px solid #21262d; font-size: 11px;
+    display: flex; gap: 6px;
+  }
+  .rel-label { color: #58a6ff; font-weight: 600; min-width: 100px; }
+  .rel-target { color: #c9d1d9; }
+  #close-panel {
+    position: absolute; top: 8px; right: 12px; cursor: pointer;
+    color: #8b949e; font-size: 16px;
+  }
+  #close-panel:hover { color: #f0f6fc; }
+</style>
+</head>
+<body>
+
+<div id="title">
+  <h1>Ontology of Normative Role Design</h1>
+  <p>13 papers · 124 entities · 209 triples — click nodes to explore</p>
+</div>
+
+<div id="tooltip">
+  <div class="tt-title"></div>
+  <div class="tt-class"></div>
+  <div class="tt-def"></div>
+  <div class="tt-papers"></div>
+</div>
+
+<div id="legend">
+  <h3>Entity Classes</h3>
+  <div class="legend-row"><div class="legend-dot" style="background:#f97583"></div> A1. Role Type</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#d2a8ff"></div> A2. Prompting Method</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#ffa657"></div> A4. Norm Frame</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#79c0ff"></div> B1. Domain</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#56d364"></div> B3. Capability</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#e3b341"></div> C1. Behavior</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#8b949e"></div> C3. Outcome</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#f85149"></div> D1. Failure Mode</div>
+  <div style="margin-top:10px;font-size:11px;opacity:0.5">
+    Node size = # of papers referencing it<br>
+    Drag to pan · Scroll to zoom · Click to inspect
+  </div>
+</div>
+
+<div id="controls">
+  <h3>Filter by Layer</h3>
+  <div id="filter-buttons"></div>
+</div>
+
+<div id="info-panel">
+  <span id="close-panel">✕</span>
+  <h3 id="panel-title"></h3>
+  <div id="panel-class" style="font-size:11px;opacity:0.6;margin-bottom:8px;"></div>
+  <div id="panel-def" style="font-size:12px;margin-bottom:8px;"></div>
+  <div class="relation-list" id="panel-relations"></div>
+</div>
+
+<canvas id="canvas"></canvas>
+
+<script>
+// =============================================================
+// DATA
+// ===============================================================
+const CLASS_COLORS = {
+  'A1.Role_Type': '#f97583',
+  'A2.Prompting_Method': '#d2a8ff',
+  'A3.Norm_Origin': '#bc8cff',
+  'A4.Norm_Frame': '#ffa657',
+  'B1.Domain': '#79c0ff',
+  'B2.Models': '#79c0ff',
+  'B3.Agentic_Capability': '#56d364',
+  'C1.Agent_Behavior': '#e3b341',
+  'C2.Evaluation_Metrics': '#e3b341',
+  'C3.Simulation_Outcome': '#8b949e',
+  'D1.Failure_Mode': '#f85149',
+};
+
+const LAYER_MAP = {
+  'A — Role Design': ['A1.Role_Type','A2.Prompting_Method','A3.Norm_Origin','A4.Norm_Frame'],
+  'B — Simulation': ['B1.Domain','B2.Models','B3.Agentic_Capability'],
+  'C — Outcomes': ['C1.Agent_Behavior','C2.Evaluation_Metrics','C3.Simulation_Outcome'],
+  'D — Failures': ['D1.Failure_Mode'],
+};
+
+// Parse entities
+const rawEntities = `domain_negotiation|B1.Domain|Multi-party bargaining and deal-making|2
+domain_social_simulation|B1.Domain|General social behaviour simulation|2
+domain_tragedy_of_commons|B1.Domain|Classic commons governance dilemma|1
+domain_non_zero_sum|B1.Domain|Negotiation: gains don't require equivalent losses|1
+capability_collective_awareness|B3.Agentic_Capability|Reason about group-level consequences|1
+capability_communication|B3.Agentic_Capability|Inter-agent natural language messaging|8
+capability_exploration_step|B3.Agentic_Capability|CoT step generating multiple alternative proposals|1
+capability_feedback_adaptation|B3.Agentic_Capability|Updating strategy based on group feedback|5
+capability_inference_preferences|B3.Agentic_Capability|Inferring other agents' hidden preferences|1
+capability_planning|B3.Agentic_Capability|Multi-step action planning|4
+capability_resource_evaluation|B3.Agentic_Capability|Evaluating extraction/resource trade-offs|1
+capability_theory_of_mind|B3.Agentic_Capability|Modelling other agents' beliefs and intentions|2
+role_type_baseline|A1.Role_Type|Neutral role with no normative direction|5
+role_type_selfish|A1.Role_Type|Agent indifferent to others' welfare|3
+role_type_universalized|A1.Role_Type|Agent prompted to consider universal consequences|1
+role_type_communal_local|A1.Role_Type|Community-rooted identity with care obligations|1
+role_type_compromising|A1.Role_Type|Agent oriented toward balanced, fair agreements|1
+role_type_greedy|A1.Role_Type|Agent explicitly prompted to self-maximise|1
+role_type_adversarial|A1.Role_Type|Designed to obstruct, manipulate, or harm|1
+norm_designed|A3.Norm_Origin|Normative behaviour explicitly injected via prompt|12
+method_incentive_structure|A2.Prompting_Method|Roles via explicit reward/score maximisation|5
+method_persona_framing|A2.Prompting_Method|Role via assigned identity or character|9
+method_principle_statement|A2.Prompting_Method|Role via normative principle statement|1
+norm_frame_ethical_consequentialist|A4.Norm_Frame|Role grounded in outcome optimisation|5
+norm_frame_ethical_deontological|A4.Norm_Frame|Role grounded in universal duty/principle|1
+norm_frame_ethical_virtue|A4.Norm_Frame|Role grounded in character traits|2
+behavior_adversarial|C1.Agent_Behavior|Agent actively obstructs or manipulates|1
+behavior_negotiation|C1.Agent_Behavior|Agents use NL to coordinate and negotiate|2
+behavior_cooperation|C1.Agent_Behavior|Agent acts with collective goals|6
+behavior_greedy|C1.Agent_Behavior|Agent over-extracts at group expense|4
+behavior_sustainable|C1.Agent_Behavior|Agent restrains to preserve shared resource|1
+behavior_misaligned|C1.Agent_Behavior|Behaviour deviates from designed role|1
+behavior_norm_enforcement|C1.Agent_Behavior|Emergent unprompted enforcement of shared norms|1
+simulation_outcome_adversarial_coalition|C3.Simulation_Outcome|Adversarial agents form alliances|1
+simulation_outcome_cooperation|C3.Simulation_Outcome|Agents achieve sustained coordination|5
+simulation_outcome_collective_failure|C3.Simulation_Outcome|System fails: resource depleted|1
+simulation_outcome_reduced_success|C3.Simulation_Outcome|Outcomes degraded but not collapsed|5
+failure_mode_capability_exploitation|D1.Failure_Mode|Capability exploited to undermine role|1
+failure_mode_model_capacity_gap|D1.Failure_Mode|Role fails for weaker LLMs|2
+role_type_situated_persona|A1.Role_Type|Detailed personal identity (demographics, personality)|3
+norm_frame_none_evident|A4.Norm_Frame|No normative logic detectable; purely functional|8
+domain_disaster_evacuation|B1.Domain|Crowd evacuation during natural disasters|1
+capability_memory|B3.Agentic_Capability|Summaries of past decisions for behavioral continuity|5
+capability_environmental_perception|B3.Agentic_Capability|Perceiving dynamic environmental state|3
+capability_emotional_reasoning|B3.Agentic_Capability|Self-assessing emotional state influencing actions|1
+behavior_adaptive_evacuation|C1.Agent_Behavior|Dynamically revises evacuation plans|1
+behavior_information_sharing|C1.Agent_Behavior|Exchanging situational information via NL|2
+behavior_prosocial_assistance|C1.Agent_Behavior|Voluntarily assists vulnerable individuals|1
+behavior_crowd_following|C1.Agent_Behavior|Moves with majority without clear personal plan|1
+simulation_outcome_validated_realism|C3.Simulation_Outcome|Outcomes validated against real-world data|4
+norm_frame_institutional_rules|A4.Norm_Frame|Expectations from social institutions|3
+domain_urban_mobility|B1.Domain|Daily travel behavior in urban networks|1
+capability_reflection|B3.Agentic_Capability|Transforming experiences into generalized insights|3
+behavior_peak_spreading|C1.Agent_Behavior|Temporally shifting departure to avoid congestion|1
+behavior_route_learning|C1.Agent_Behavior|Learning preferred routes from experience|1
+behavior_social_coordination|C1.Agent_Behavior|Coordinating daily logistics via communication|1
+behavior_incident_adaptation|C1.Agent_Behavior|Adapting travel to network disruptions|1
+behavior_over_reactive_avoidance|C1.Agent_Behavior|Persistently avoiding previously disrupted routes|1
+failure_mode_cooperative_bias|D1.Failure_Mode|Excessive cooperativeness reflecting training|2
+method_narrative_priming|A2.Prompting_Method|Role via appended cultural narrative|1
+role_type_narrative_cooperative|A1.Role_Type|Primed with cooperation-themed folk tale|1
+role_type_narrative_nonsensical|A1.Role_Type|Primed with thematically nonsensical narrative|1
+role_type_narrative_heterogeneous|A1.Role_Type|Agents receive different narrative primes|1
+norm_frame_social_convention|A4.Norm_Frame|Expectations via informal cultural narratives|2
+domain_public_goods_game|B1.Domain|Cooperation dilemma: contribute to shared pool|2
+behavior_moderate_contribution|C1.Agent_Behavior|Contributes at intermediate levels|2
+behavior_strategic_exploitation|C1.Agent_Behavior|Exploits predictable cooperative behavior|2
+simulation_outcome_cooperation_breakdown|C3.Simulation_Outcome|Cooperation collapses from normative mismatch|1
+failure_mode_narrative_incoherence|D1.Failure_Mode|Mixed narratives in group cause failure|1
+role_type_value_primed|A1.Role_Type|Assigned personal value from Schwartz theory|1
+norm_frame_value_orientation|A4.Norm_Frame|Expectations from assigned personal values|1
+domain_interpersonal_trust|B1.Domain|Dyadic dialogue for mutual trust formation|1
+behavior_value_expressive_dialogue|C1.Agent_Behavior|Dialogue reflecting assigned value orientation|1
+behavior_similarity_based_evaluation|C1.Agent_Behavior|Evaluates partners based on value alignment|1
+failure_mode_language_dependent_controllability|D1.Failure_Mode|Role effectiveness varies with language|2
+domain_opinion_dynamics|B1.Domain|Multi-round debate with opinion updates|1
+behavior_opinion_convergence|C1.Agent_Behavior|Converging toward dominant opinion|1
+behavior_asymmetric_acceptance|C1.Agent_Behavior|Preferentially accepts agreeable opinions|1
+behavior_fallacious_argumentation|C1.Agent_Behavior|Produces logically flawed arguments|1
+simulation_outcome_consensus_drift|C3.Simulation_Outcome|Population converges to single opinion|1
+failure_mode_fallacy_susceptibility|D1.Failure_Mode|Generates and is persuaded by flawed arguments|1
+role_type_cooperative|A1.Role_Type|Cooperative personality label as minimal priming|1
+domain_strategic_game_theory|B1.Domain|Classical 2-player strategic games|2
+m�)�y�譺޾+r

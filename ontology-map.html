@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ontology of Normative Role Design — Mind Map</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: #0d1117; color: #c9d1d9; overflow: hidden; }
+
+  #canvas { width: 100vw; height: 100vh; }
+
+  /* Tooltip */
+  #tooltip {
+    position: fixed; pointer-events: none; opacity: 0;
+    background: #161b22; border: 1px solid #30363d; border-radius: 8px;
+    padding: 12px 16px; max-width: 380px; font-size: 13px; line-height: 1.5;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4); z-index: 100;
+    transition: opacity 0.15s;
+  }
+  #tooltip.visible { opacity: 1; }
+  #tooltip .tt-title { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+  #tooltip .tt-class { font-size: 11px; opacity: 0.6; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  #tooltip .tt-def { font-size: 12px; opacity: 0.85; }
+  #tooltip .tt-papers { font-size: 11px; opacity: 0.5; margin-top: 6px; }
+
+  /* Legend */
+  #legend {
+    position: fixed; bottom: 20px; left: 20px; background: #161b22ee;
+    border: 1px solid #30363d; border-radius: 10px; padding: 16px 20px;
+    font-size: 12px; z-index: 50;
+  }
+  #legend h3 { font-size: 13px; margin-bottom: 10px; color: #58a6ff; }
+  .legend-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+
+  /* Controls */
+  #controls {
+    position: fixed; top: 20px; right: 20px; background: #161b22ee;
+    border: 1px solid #30363d; border-radius: 10px; padding: 16px 20px;
+    font-size: 12px; z-index: 50; max-width: 260px;
+  }
+  #controls h3 { font-size: 13px; margin-bottom: 10px; color: #58a6ff; }
+  .filter-btn {
+    display: inline-block; padding: 4px 10px; margin: 2px; border-radius: 12px;
+    background: #21262d; border: 1px solid #30363d; color: #8b949e; cursor: pointer;
+    font-size: 11px; transition: all 0.15s;
+  }
+  .filter-btn:hover, .filter-btn.active { background: #30363d; color: #f0f6fc; border-color: #58a6ff; }
+
+  /* Title */
+  #title {
+    position: fixed; top: 20px; left: 20px; z-index: 50;
+  }
+  #title h1 { font-size: 18px; font-weight: 700; color: #f0f6fc; }
+  #title p { font-size: 12px; opacity: 0.5; margin-top: 4px; }
+
+  /* Info panel */
+  #info-panel {
+    position: fixed; right: 20px; bottom: 20px; background: #161b22ee;
+    border: 1px solid #30363d; border-radius: 10px; padding: 16px 20px;
+    font-size: 12px; z-index: 50; max-width: 320px; display: none;
+  }
+  #info-panel.visible { display: block; }
+  #info-panel h3 { font-size: 14px; margin-bottom: 8px; }
+  #info-panel .relation-list { margin-top: 8px; }
+  #info-panel .rel-item {
+    padding: 4px 0; border-bottom: 1px solid #21262d; font-size: 11px;
+    display: flex; gap: 6px;
+  }
+  .rel-label { color: #58a6ff; font-weight: 600; min-width: 100px; }
+  .rel-target { color: #c9d1d9; }
+  #close-panel {
+    position: absolute; top: 8px; right: 12px; cursor: pointer;
+    color: #8b949e; font-size: 16px;
+  }
+  #close-panel:hover { color: #f0f6fc; }
+</style>
+</head>
+<body>
+
+<div id="title">
+  <h1>Ontology of Normative Role Design</h1>
+  <p>13 papers · 124 entities · 209 triples — click nodes to explore</p>
+</div>
+
+<div id="tooltip">
+  <div class="tt-title"></div>
+  <div class="tt-class"></div>
+  <div class="tt-def"></div>
+  <div class="tt-papers"></div>
+</div>
+
+<div id="legend">
+  <h3>Entity Classes</h3>
+  <div class="legend-row"><div class="legend-dot" style="background:#f97583"></div> A1. Role Type</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#d2a8ff"></div> A2. Prompting Method</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#ffa657"></div> A4. Norm Frame</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#79c0ff"></div> B1. Domain</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#56d364"></div> B3. Capability</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#e3b341"></div> C1. Behavior</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#8b949e"></div> C3. Outcome</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#f85149"></div> D1. Failure Mode</div>
+  <div style="margin-top:10px;font-size:11px;opacity:0.5">
+    Node size = # of papers referencing it<br>
+    Drag to pan · Scroll to zoom · Click to inspect
+  </div>
+</div>
+
+<div id="controls">
+  <h3>Filter by Layer</h3>
+  <div id="filter-buttons"></div>
+</div>
+
+<div id="info-panel">
+  <span id="close-panel">✕</span>
+  <h3 id="panel-title"></h3>
+  <div id="panel-class" style="font-size:11px;opacity:0.6;margin-bottom:8px;"></div>
+  <div id="panel-def" style="font-size:12px;margin-bottom:8px;"></div>
+  <div class="relation-list" id="panel-relations"></div>
+</div>
+
+<canvas id="canvas"></canvas>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+const CLASS_COLORS = {
+  'A1.Role_Type': '#f97583',
+  'A2.Prompting_Method': '#d2a8ff',
+  'A3.Norm_Origin': '#bc8cff',
+  'A4.Norm_Frame': '#ffa657',
+  'B1.Domain': '#79c0ff',
+  'B2.Models': '#79c0ff',
+  'B3.Agentic_Capability': '#56d364',
+  'C1.Agent_Behavior': '#e3b341',
+  'C2.Evaluation_Metrics': '#e3b341',
+  'C3.Simulation_Outcome': '#8b949e',
+  'D1.Failure_Mode': '#f85149',
+};
+
+const LAYER_MAP = {
+  'A — Role Design': ['A1.Role_Type','A2.Prompting_Method','A3.Norm_Origin','A4.Norm_Frame'],
+  'B — Simulation': ['B1.Domain','B2.Models','B3.Agentic_Capability'],
+  'C — Outcomes': ['C1.Agent_Behavior','C2.Evaluation_Metrics','C3.Simulation_Outcome'],
+  'D — Failures': ['D1.Failure_Mode'],
+};
+
+// Parse entities
+const rawEntities = `domain_negotiation|B1.Domain|Multi-party bargaining and deal-making|2
+domain_social_simulation|B1.Domain|General social behaviour simulation|2
+domain_tragedy_of_commons|B1.Domain|Classic commons governance dilemma|1
+domain_non_zero_sum|B1.Domain|Negotiation: gains don't require equivalent losses|1
+capability_collective_awareness|B3.Agentic_Capability|Reason about group-level consequences|1
+capability_communication|B3.Agentic_Capability|Inter-agent natural language messaging|8
+capability_exploration_step|B3.Agentic_Capability|CoT step generating multiple alternative proposals|1
+capability_feedback_adaptation|B3.Agentic_Capability|Updating strategy based on group feedback|5
+capability_inference_preferences|B3.Agentic_Capability|Inferring other agents' hidden preferences|1
+capability_planning|B3.Agentic_Capability|Multi-step action planning|4
+capability_resource_evaluation|B3.Agentic_Capability|Evaluating extraction/resource trade-offs|1
+capability_theory_of_mind|B3.Agentic_Capability|Modelling other agents' beliefs and intentions|2
+role_type_baseline|A1.Role_Type|Neutral role with no normative direction|5
+role_type_selfish|A1.Role_Type|Agent indifferent to others' welfare|3
+role_type_universalized|A1.Role_Type|Agent prompted to consider universal consequences|1
+role_type_communal_local|A1.Role_Type|Community-rooted identity with care obligations|1
+role_type_compromising|A1.Role_Type|Agent oriented toward balanced, fair agreements|1
+role_type_greedy|A1.Role_Type|Agent explicitly prompted to self-maximise|1
+role_type_adversarial|A1.Role_Type|Designed to obstruct, manipulate, or harm|1
+norm_designed|A3.Norm_Origin|Normative behaviour explicitly injected via prompt|12
+method_incentive_structure|A2.Prompting_Method|Roles via explicit reward/score maximisation|5
+method_persona_framing|A2.Prompting_Method|Role via assigned identity or character|9
+method_principle_statement|A2.Prompting_Method|Role via normative principle statement|1
+norm_frame_ethical_consequentialist|A4.Norm_Frame|Role grounded in outcome optimisation|5
+norm_frame_ethical_deontological|A4.Norm_Frame|Role grounded in universal duty/principle|1
+norm_frame_ethical_virtue|A4.Norm_Frame|Role grounded in character traits|2
+behavior_adversarial|C1.Agent_Behavior|Agent actively obstructs or manipulates|1
+behavior_negotiation|C1.Agent_Behavior|Agents use NL to coordinate and negotiate|2
+behavior_cooperation|C1.Agent_Behavior|Agent acts with collective goals|6
+behavior_greedy|C1.Agent_Behavior|Agent over-extracts at group expense|4
+behavior_sustainable|C1.Agent_Behavior|Agent restrains to preserve shared resource|1
+behavior_misaligned|C1.Agent_Behavior|Behaviour deviates from designed role|1
+behavior_norm_enforcement|C1.Agent_Behavior|Emergent unprompted enforcement of shared norms|1
+simulation_outcome_adversarial_coalition|C3.Simulation_Outcome|Adversarial agents form alliances|1
+simulation_outcome_cooperation|C3.Simulation_Outcome|Agents achieve sustained coordination|5
+simulation_outcome_collective_failure|C3.Simulation_Outcome|System fails: resource depleted|1
+simulation_outcome_reduced_success|C3.Simulation_Outcome|Outcomes degraded but not collapsed|5
+failure_mode_capability_exploitation|D1.Failure_Mode|Capability exploited to undermine role|1
+failure_mode_model_capacity_gap|D1.Failure_Mode|Role fails for weaker LLMs|2
+role_type_situated_persona|A1.Role_Type|Detailed personal identity (demographics, personality)|3
+norm_frame_none_evident|A4.Norm_Frame|No normative logic detectable; purely functional|8
+domain_disaster_evacuation|B1.Domain|Crowd evacuation during natural disasters|1
+capability_memory|B3.Agentic_Capability|Summaries of past decisions for behavioral continuity|5
+capability_environmental_perception|B3.Agentic_Capability|Perceiving dynamic environmental state|3
+capability_emotional_reasoning|B3.Agentic_Capability|Self-assessing emotional state influencing actions|1
+behavior_adaptive_evacuation|C1.Agent_Behavior|Dynamically revises evacuation plans|1
+behavior_information_sharing|C1.Agent_Behavior|Exchanging situational information via NL|2
+behavior_prosocial_assistance|C1.Agent_Behavior|Voluntarily assists vulnerable individuals|1
+behavior_crowd_following|C1.Agent_Behavior|Moves with majority without clear personal plan|1
+simulation_outcome_validated_realism|C3.Simulation_Outcome|Outcomes validated against real-world data|4
+norm_frame_institutional_rules|A4.Norm_Frame|Expectations from social institutions|3
+domain_urban_mobility|B1.Domain|Daily travel behavior in urban networks|1
+capability_reflection|B3.Agentic_Capability|Transforming experiences into generalized insights|3
+behavior_peak_spreading|C1.Agent_Behavior|Temporally shifting departure to avoid congestion|1
+behavior_route_learning|C1.Agent_Behavior|Learning preferred routes from experience|1
+behavior_social_coordination|C1.Agent_Behavior|Coordinating daily logistics via communication|1
+behavior_incident_adaptation|C1.Agent_Behavior|Adapting travel to network disruptions|1
+behavior_over_reactive_avoidance|C1.Agent_Behavior|Persistently avoiding previously disrupted routes|1
+failure_mode_cooperative_bias|D1.Failure_Mode|Excessive cooperativeness reflecting training|2
+method_narrative_priming|A2.Prompting_Method|Role via appended cultural narrative|1
+role_type_narrative_cooperative|A1.Role_Type|Primed with cooperation-themed folk tale|1
+role_type_narrative_nonsensical|A1.Role_Type|Primed with thematically nonsensical narrative|1
+role_type_narrative_heterogeneous|A1.Role_Type|Agents receive different narrative primes|1
+norm_frame_social_convention|A4.Norm_Frame|Expectations via informal cultural narratives|2
+domain_public_goods_game|B1.Domain|Cooperation dilemma: contribute to shared pool|2
+behavior_moderate_contribution|C1.Agent_Behavior|Contributes at intermediate levels|2
+behavior_strategic_exploitation|C1.Agent_Behavior|Exploits predictable cooperative behavior|2
+simulation_outcome_cooperation_breakdown|C3.Simulation_Outcome|Cooperation collapses from normative mismatch|1
+failure_mode_narrative_incoherence|D1.Failure_Mode|Mixed narratives in group cause failure|1
+role_type_value_primed|A1.Role_Type|Assigned personal value from Schwartz theory|1
+norm_frame_value_orientation|A4.Norm_Frame|Expectations from assigned personal values|1
+domain_interpersonal_trust|B1.Domain|Dyadic dialogue for mutual trust formation|1
+behavior_value_expressive_dialogue|C1.Agent_Behavior|Dialogue reflecting assigned value orientation|1
+behavior_similarity_based_evaluation|C1.Agent_Behavior|Evaluates partners based on value alignment|1
+failure_mode_language_dependent_controllability|D1.Failure_Mode|Role effectiveness varies with language|2
+domain_opinion_dynamics|B1.Domain|Multi-round debate with opinion updates|1
+behavior_opinion_convergence|C1.Agent_Behavior|Converging toward dominant opinion|1
+behavior_asymmetric_acceptance|C1.Agent_Behavior|Preferentially accepts agreeable opinions|1
+behavior_fallacious_argumentation|C1.Agent_Behavior|Produces logically flawed arguments|1
+simulation_outcome_consensus_drift|C3.Simulation_Outcome|Population converges to single opinion|1
+failure_mode_fallacy_susceptibility|D1.Failure_Mode|Generates and is persuaded by flawed arguments|1
+role_type_cooperative|A1.Role_Type|Cooperative personality label as minimal priming|1
+domain_strategic_game_theory|B1.Domain|Classical 2-player strategic games|2
+failure_mode_training_data_contamination|D1.Failure_Mode|Prior game knowledge biases behavior|1
+role_type_institutional_balancer|A1.Role_Type|Supranational policymaker weighing stakeholders|1
+role_type_sector_advocate|A1.Role_Type|Specific policy sector identity|1
+role_type_lobbyist|A1.Role_Type|Interest group identity; lobbies authority|1
+role_type_functional_advisor|A1.Role_Type|Professional knowledge domain advisor|1
+domain_institutional_land_use_policy|B1.Domain|Polycentric institutional governance simulation|1
+capability_tool_use|B3.Agentic_Capability|Writes and executes external code|1
+capability_rag|B3.Agentic_Capability|Retrieves info from external knowledge bases|1
+capability_hybrid_architecture|B3.Agentic_Capability|LLM reasoning + programmatic rules|1
+behavior_incremental_adjustment|C1.Agent_Behavior|Small gradual policy changes|1
+behavior_path_dependent_decision|C1.Agent_Behavior|Decisions constrained by previous choices|1
+behavior_sector_advocacy|C1.Agent_Behavior|Consistently argues for assigned sector|1
+behavior_task_execution|C1.Agent_Behavior|Follows task instructions; completes workflows|2
+simulation_outcome_incremental_policy_convergence|C3.Simulation_Outcome|Gradually approaches policy targets|1
+simulation_outcome_persistent_budget_imbalance|C3.Simulation_Outcome|Chronic funding mismatch persists|1
+simulation_outcome_system_robustness|C3.Simulation_Outcome|System maintains behavioral believability|1
+failure_mode_hallucination|D1.Failure_Mode|Generates plausible but factually incorrect outputs|2
+failure_mode_incomplete_information_processing|D1.Failure_Mode|Selectively attends to available inputs|1
+role_type_data_driven_persona|A1.Role_Type|Profile from real-world data clustering|1
+domain_mmo_game_economy|B1.Domain|Virtual economy: production, consumption, trading|1
+behavior_role_specialization|C1.Agent_Behavior|Develops distinct functional roles from profile|1
+behavior_contextual_adaptation|C1.Agent_Behavior|Dynamically revises strategy from environment|2
+simulation_outcome_emergent_specialization|C3.Simulation_Outcome|Agents self-sort into differentiated roles|1
+simulation_outcome_market_dynamics|C3.Simulation_Outcome|Trading produces realistic price patterns|1
+failure_mode_conservative_bias|D1.Failure_Mode|Defaults to safe, low-risk actions|1
+behavior_retaliatory_defection|C1.Agent_Behavior|Permanently defects after single perceived betrayal|1
+failure_mode_coordination_rigidity|D1.Failure_Mode|Fails to coordinate with simple strategies|1
+role_type_professional_persona|A1.Role_Type|Professional identity: job, skills, company|1
+domain_team_assembly|B1.Domain|Team formation via agent interaction|1
+behavior_conversational_assessment|C1.Agent_Behavior|Evaluates others' capabilities via dialogue|1
+behavior_capability_overstatement|C1.Agent_Behavior|Exaggerates capabilities beyond persona|1
+failure_mode_persona_non_adherence|D1.Failure_Mode|Deviates from assigned persona|1
+role_type_prosocial_primed|A1.Role_Type|Primed prosocial via minimal contextual cues|1
+role_type_self_interest_primed|A1.Role_Type|Primed self-interest via contextual cues|1
+method_contextual_framing|A2.Prompting_Method|Minimal cues (labels, phrases) to prime behavior|1
+method_stake_prompting|A2.Prompting_Method|Makes personal costs salient in prompt|1
+behavior_norm_violation|C1.Agent_Behavior|Voluntarily breaks established rules|1`;
+
+const entities = {};
+rawEntities.trim().split('\n').forEach(line => {
+  const [name, cls, def, count] = line.split('|');
+  entities[name] = { name, cls: cls.trim(), def: def.trim(), papers: parseInt(count) };
+});
+
+const rawTriples = `T001|role_type_baseline|induces_behavior|behavior_greedy
+T002|behavior_greedy|drives_outcome|simulation_outcome_collective_failure
+T003|role_type_selfish|has_prompting_method|method_persona_framing
+T004|role_type_selfish|grounded_in|norm_frame_ethical_consequentialist
+T005|role_type_selfish|induces_behavior|behavior_greedy
+T006|role_type_selfish|elicits_response|behavior_norm_enforcement
+T007|role_type_universalized|has_prompting_method|method_principle_statement
+T008|method_principle_statement|grounded_in|norm_frame_ethical_deontological
+T009|role_type_universalized|induces_behavior|behavior_sustainable
+T010|behavior_sustainable|drives_outcome|simulation_outcome_cooperation
+T011|capability_communication|enables|behavior_negotiation
+T012|behavior_negotiation|drives_outcome|simulation_outcome_cooperation
+T014|role_type_universalized|produces_failure|failure_mode_model_capacity_gap
+T016|role_type_communal_local|has_prompting_method|method_persona_framing
+T017|role_type_communal_local|grounded_in|norm_frame_ethical_virtue
+T018|role_type_communal_local|induces_behavior|behavior_cooperation
+T019|role_type_communal_local|induces_behavior|behavior_norm_enforcement
+T020|role_type_compromising|has_prompting_method|method_incentive_structure
+T021|role_type_compromising|grounded_in|norm_frame_ethical_virtue
+T022|role_type_compromising|grounded_in|norm_frame_ethical_consequentialist
+T023|role_type_compromising|induces_behavior|behavior_cooperation
+T024|behavior_cooperation|drives_outcome|simulation_outcome_cooperation
+T025|role_type_greedy|has_prompting_method|method_incentive_structure
+T026|role_type_greedy|grounded_in|norm_frame_ethical_consequentialist
+T027|role_type_greedy|induces_behavior|behavior_greedy
+T028|behavior_greedy|drives_outcome|simulation_outcome_reduced_success
+T029|role_type_adversarial|has_prompting_method|method_incentive_structure
+T030|role_type_adversarial|has_prompting_method|method_persona_framing
+T031|role_type_adversarial|grounded_in|norm_frame_ethical_consequentialist
+T032|role_type_adversarial|induces_behavior|behavior_adversarial
+T033|role_type_compromising|induces_behavior|behavior_misaligned
+T034|behavior_adversarial|drives_outcome|simulation_outcome_adversarial_coalition
+T044|role_type_situated_persona|has_prompting_method|method_persona_framing
+T046|role_type_situated_persona|grounded_in|norm_frame_none_evident
+T047|role_type_situated_persona|role_used_in|domain_disaster_evacuation
+T048|role_type_situated_persona|induces_behavior|behavior_adaptive_evacuation
+T049|role_type_situated_persona|induces_behavior|behavior_information_sharing
+T050|role_type_situated_persona|induces_behavior|behavior_prosocial_assistance
+T051|role_type_situated_persona|induces_behavior|behavior_crowd_following
+T052|capability_communication|enables|behavior_information_sharing
+T056|behavior_information_sharing|drives_outcome|simulation_outcome_validated_realism
+T057|behavior_adaptive_evacuation|drives_outcome|simulation_outcome_validated_realism
+T059|role_type_situated_persona|role_used_in|domain_urban_mobility
+T060|role_type_situated_persona|induces_behavior|behavior_peak_spreading
+T061|role_type_situated_persona|induces_behavior|behavior_route_learning
+T062|role_type_situated_persona|induces_behavior|behavior_social_coordination
+T063|role_type_situated_persona|induces_behavior|behavior_incident_adaptation
+T064|role_type_situated_persona|induces_behavior|behavior_over_reactive_avoidance
+T065|capability_memory|enables|behavior_route_learning
+T066|capability_reflection|enables|behavior_route_learning
+T067|capability_communication|enables|behavior_social_coordination
+T069|behavior_peak_spreading|drives_outcome|simulation_outcome_validated_realism
+T072|role_type_situated_persona|produces_failure|failure_mode_cooperative_bias
+T075|role_type_situated_persona|grounded_in|norm_frame_institutional_rules
+T076|role_type_baseline|induces_behavior|behavior_moderate_contribution
+T078|role_type_selfish|induces_behavior|behavior_moderate_contribution
+T079|method_incentive_structure|shapes_behavior|behavior_moderate_contribution
+T080|role_type_narrative_cooperative|has_prompting_method|method_narrative_priming
+T081|method_narrative_priming|grounded_in|norm_frame_social_convention
+T082|role_type_narrative_cooperative|induces_behavior|behavior_cooperation
+T084|role_type_narrative_nonsensical|induces_behavior|behavior_moderate_contribution
+T085|role_type_narrative_heterogeneous|induces_behavior|behavior_strategic_exploitation
+T086|behavior_strategic_exploitation|drives_outcome|simulation_outcome_cooperation_breakdown
+T087|role_type_narrative_heterogeneous|produces_failure|failure_mode_narrative_incoherence
+T089|role_type_value_primed|has_prompting_method|method_persona_framing
+T091|role_type_value_primed|grounded_in|norm_frame_value_orientation
+T093|role_type_value_primed|induces_behavior|behavior_value_expressive_dialogue
+T094|role_type_value_primed|induces_behavior|behavior_similarity_based_evaluation
+T096|behavior_similarity_based_evaluation|drives_outcome|simulation_outcome_validated_realism
+T097|role_type_value_primed|produces_failure|failure_mode_language_dependent_controllability
+T098|role_type_baseline|induces_behavior|behavior_opinion_convergence
+T099|role_type_baseline|induces_behavior|behavior_asymmetric_acceptance
+T100|role_type_baseline|induces_behavior|behavior_fallacious_argumentation
+T101|behavior_opinion_convergence|drives_outcome|simulation_outcome_consensus_drift
+T105|role_type_baseline|produces_failure|failure_mode_fallacy_susceptibility
+T107|role_type_cooperative|has_prompting_method|method_persona_framing
+T109|role_type_cooperative|grounded_in|norm_frame_ethical_virtue
+T111|role_type_cooperative|induces_behavior|behavior_cooperation
+T112|role_type_cooperative|produces_failure|failure_mode_training_data_contamination
+T113|role_type_cooperative|produces_failure|failure_mode_language_dependent_controllability
+T115|role_type_selfish|induces_behavior|behavior_strategic_exploitation
+T117|behavior_strategic_exploitation|drives_outcome|simulation_outcome_reduced_success
+T120|role_type_institutional_balancer|has_prompting_method|method_persona_framing
+T122|role_type_institutional_balancer|grounded_in|norm_frame_institutional_rules
+T124|role_type_institutional_balancer|induces_behavior|behavior_incremental_adjustment
+T125|role_type_institutional_balancer|induces_behavior|behavior_path_dependent_decision
+T126|behavior_incremental_adjustment|drives_outcome|simulation_outcome_incremental_policy_convergence
+T128|capability_planning|enables|behavior_incremental_adjustment
+T129|capability_communication|enables|behavior_sector_advocacy
+T130|role_type_institutional_balancer|produces_failure|failure_mode_incomplete_information_processing
+T131|role_type_sector_advocate|has_prompting_method|method_persona_framing
+T132|role_type_sector_advocate|grounded_in|norm_frame_institutional_rules
+T134|role_type_sector_advocate|induces_behavior|behavior_sector_advocacy
+T136|role_type_sector_advocate|produces_failure|failure_mode_hallucination
+T137|role_type_lobbyist|has_prompting_method|method_persona_framing
+T138|role_type_lobbyist|grounded_in|norm_frame_institutional_rules
+T140|role_type_lobbyist|induces_behavior|behavior_sector_advocacy
+T144|role_type_functional_advisor|induces_behavior|behavior_task_execution
+T146|role_type_data_driven_persona|has_prompting_method|method_persona_framing
+T148|role_type_data_driven_persona|grounded_in|norm_frame_none_evident
+T150|role_type_data_driven_persona|induces_behavior|behavior_role_specialization
+T151|role_type_data_driven_persona|induces_behavior|behavior_contextual_adaptation
+T153|capability_reflection|enables|behavior_contextual_adaptation
+T154|capability_memory|enables|behavior_contextual_adaptation
+T155|behavior_role_specialization|drives_outcome|simulation_outcome_emergent_specialization
+T156|role_type_data_driven_persona|produces_failure|failure_mode_conservative_bias
+T158|role_type_baseline|induces_behavior|behavior_retaliatory_defection
+T159|role_type_baseline|induces_behavior|behavior_cooperation
+T162|role_type_baseline|produces_failure|failure_mode_coordination_rigidity
+T164|capability_theory_of_mind|enables|behavior_cooperation
+T179|role_type_professional_persona|induces_behavior|behavior_conversational_assessment
+T180|role_type_professional_persona|induces_behavior|behavior_task_execution
+T183|role_type_professional_persona|induces_behavior|behavior_capability_overstatement
+T185|role_type_professional_persona|produces_failure|failure_mode_persona_non_adherence
+T190|role_type_professional_persona|has_prompting_method|method_persona_framing
+T191|role_type_professional_persona|grounded_in|norm_frame_none_evident
+T194|role_type_prosocial_primed|has_prompting_method|method_contextual_framing
+T195|role_type_prosocial_primed|grounded_in|norm_frame_social_convention
+T196|role_type_prosocial_primed|role_used_in|domain_public_goods_game
+T197|role_type_prosocial_primed|induces_behavior|behavior_cooperation
+T198|role_type_self_interest_primed|has_prompting_method|method_contextual_framing
+T199|role_type_self_interest_primed|grounded_in|norm_frame_ethical_consequentialist
+T200|role_type_self_interest_primed|role_used_in|domain_public_goods_game
+T201|role_type_self_interest_primed|induces_behavior|behavior_moderate_contribution
+T202|role_type_situated_persona|role_used_in|domain_social_simulation
+T203|role_type_situated_persona|induces_behavior|behavior_norm_violation
+T204|capability_communication|enables|behavior_norm_violation
+T205|norm_frame_institutional_rules|conditions_behavior|behavior_norm_violation
+T206|method_stake_prompting|shapes_behavior|behavior_cooperation
+T207|role_type_baseline|produces_failure|failure_mode_cooperative_bias
+T208|behavior_cooperation|drives_outcome|simulation_outcome_validated_realism
+T209|behavior_norm_violation|drives_outcome|simulation_outcome_validated_realism`;
+
+const triples = [];
+rawTriples.trim().split('\n').forEach(line => {
+  const [tid, subj, rel, obj] = line.split('|');
+  if (entities[subj] && entities[obj]) {
+    triples.push({ id: tid, subject: subj, relation: rel, object: obj });
+  }
+});
+
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+let W, H;
+const dpr = window.devicePixelRatio || 1;
+
+function resize() {
+  W = window.innerWidth; H = window.innerHeight;
+  canvas.width = W * dpr; canvas.height = H * dpr;
+  canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+resize();
+window.addEventListener('resize', resize);
+
+const nodes = Object.values(entities).map((e, i) => {
+  const angle = (i / Object.keys(entities).length) * Math.PI * 2;
+  const r = 250 + Math.random() * 150;
+  return {
+    ...e,
+    x: W/2 + Math.cos(angle) * r,
+    y: H/2 + Math.sin(angle) * r,
+    vx: 0, vy: 0,
+    radius: Math.max(4, Math.min(18, 4 + e.papers * 2.2)),
+    visible: true,
+  };
+});
+
+const nodeMap = {};
+nodes.forEach(n => nodeMap[n.name] = n);
+
+const links = triples.map(t => ({
+  source: nodeMap[t.subject],
+  target: nodeMap[t.object],
+  relation: t.relation,
+  id: t.id,
+})).filter(l => l.source && l.target);
+
+let activeFilters = new Set();
+
+function simulate() {
+  const alpha = 0.3;
+  const repulsion = 1800;
+  const attraction = 0.008;
+  const idealDist = 120;
+  const damping = 0.88;
+  const centerForce = 0.002;
+
+  nodes.forEach(n => {
+    if (!n.visible) return;
+    n.vx += (W/2 - n.x) * centerForce;
+    n.vy += (H/2 - n.y) * centerForce;
+  });
+
+  const visibleNodes = nodes.filter(n => n.visible);
+  for (let i = 0; i < visibleNodes.length; i++) {
+    for (let j = i + 1; j < visibleNodes.length; j++) {
+      const a = visibleNodes[i], b = visibleNodes[j];
+      let dx = b.x - a.x, dy = b.y - a.y;
+      let dist = Math.sqrt(dx*dx + dy*dy) || 1;
+      let force = repulsion / (dist * dist);
+      let fx = (dx / dist) * force, fy = (dy / dist) * force;
+      a.vx -= fx; a.vy -= fy;
+      b.vx += fx; b.vy += fy;
+    }
+  }
+
+  links.forEach(l => {
+    if (!l.source.visible || !l.target.visible) return;
+    let dx = l.target.x - l.source.x, dy = l.target.y - l.source.y;
+    let dist = Math.sqrt(dx*dx + dy*dy) || 1;
+    let force = (dist - idealDist) * attraction;
+    let fx = (dx / dist) * force, fy = (dy / dist) * force;
+    l.source.vx += fx; l.source.vy += fy;
+    l.target.vx -= fx; l.target.vy -= fy;
+  });
+
+  nodes.forEach(n => {
+    if (!n.visible || n.dragging) return;
+    n.vx *= damping; n.vy *= damping;
+    n.x += n.vx * alpha; n.y += n.vy * alpha;
+  });
+}
+
+let transform = { x: 0, y: 0, scale: 1 };
+let hoveredNode = null;
+let selectedNode = null;
+
+const RELATION_COLORS = {
+  'has_prompting_method': '#d2a8ff55',
+  'grounded_in': '#ffa65755',
+  'induces_behavior': '#e3b34188',
+  'drives_outcome': '#8b949e55',
+  'enables': '#56d36455',
+  'produces_failure': '#f8514955',
+  'role_used_in': '#79c0ff55',
+  'shapes_behavior': '#d2a8ff55',
+  'conditions_behavior': '#ffa65755',
+  'elicits_response': '#e3b34155',
+  'leads_to': '#f8514955',
+  'undermines': '#f8514955',
+  'intended_to_support': '#56d36455',
+};
+
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+  ctx.save();
+  ctx.translate(transform.x, transform.y);
+  ctx.scale(transform.scale, transform.scale);
+
+  links.forEach(l => {
+    if (!l.source.visible || !l.target.visible) return;
+    const isHighlight = hoveredNode && (l.source === hoveredNode || l.target === hoveredNode);
+    const isSelected = selectedNode && (l.source === selectedNode || l.target === selectedNode);
+
+    ctx.beginPath();
+    ctx.moveTo(l.source.x, l.source.y);
+    ctx.lineTo(l.target.x, l.target.y);
+
+    if (isHighlight || isSelected) {
+      ctx.strokeStyle = RELATION_COLORS[l.relation] || '#58a6ff66';
+      ctx.lineWidth = 2;
+      ctx.globalAlpha = 1;
+    } else if (hoveredNode || selectedNode) {
+      ctx.strokeStyle = '#21262d';
+      ctx.lineWidth = 0.5;
+      ctx.globalAlpha = 0.3;
+    } else {
+      ctx.strokeStyle = '#21262d';
+      ctx.lineWidth = 0.5;
+      ctx.globalAlpha = 0.6;
+    }
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+
+    if (isHighlight || isSelected) {
+      const dx = l.target.x - l.source.x;
+      const dy = l.target.y - l.source.y;
+      const mx = l.source.x + dx * 0.65;
+      const my = l.source.y + dy * 0.65;
+      const angle = Math.atan2(dy, dx);
+      const arrowSize = 6;
+      ctx.beginPath();
+      ctx.moveTo(mx + Math.cos(angle) * arrowSize, my + Math.sin(angle) * arrowSize);
+      ctx.lineTo(mx + Math.cos(angle + 2.5) * arrowSize, my + Math.sin(angle + 2.5) * arrowSize);
+      ctx.lineTo(mx + Math.cos(angle - 2.5) * arrowSize, my + Math.sin(angle - 2.5) * arrowSize);
+      ctx.closePath();
+      ctx.fillStyle = RELATION_COLORS[l.relation] || '#58a6ff66';
+      ctx.fill();
+    }
+  });
+
+  if (hoveredNode || selectedNode) {
+    const target = hoveredNode || selectedNode;
+    links.forEach(l => {
+      if (!l.source.visible || !l.target.visible) return;
+      if (l.source !== target && l.target !== target) return;
+      const mx = (l.source.x + l.target.x) / 2;
+      const my = (l.source.y + l.target.y) / 2;
+      ctx.save();
+      ctx.font = '9px Inter, system-ui';
+      ctx.fillStyle = '#8b949e';
+      ctx.textAlign = 'center';
+      ctx.fillText(l.relation.replace(/_/g, ' '), mx, my - 4);
+      ctx.restore();
+    });
+  }
+
+  nodes.forEach(n => {
+    if (!n.visible) return;
+    const color = CLASS_COLORS[n.cls] || '#8b949e';
+    const isConnected = hoveredNode && links.some(l =>
+      (l.source === hoveredNode && l.target === n) || (l.target === hoveredNode && l.source === n)
+    );
+    const isSelConnected = selectedNode && links.some(l =>
+      (l.source === selectedNode && l.target === n) || (l.target === selectedNode && l.source === n)
+    );
+    const isHovered = n === hoveredNode;
+    const isSelected = n === selectedNode;
+
+    let alpha = 1;
+    if ((hoveredNode || selectedNode) && !isHovered && !isConnected && !isSelected && !isSelConnected) {
+      alpha = 0.12;
+    }
+
+    ctx.globalAlpha = alpha;
+
+    if (isHovered || isSelected) {
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.radius + 8, 0, Math.PI * 2);
+      ctx.fillStyle = color + '22';
+      ctx.fill();
+    }
+
+    ctx.beginPath();
+    ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
+    ctx.fillStyle = color;
+    ctx.fill();
+
+    if (n.radius >= 7 || isHovered || isConnected || isSelected || isSelConnected) {
+      ctx.font = `${isHovered || isSelected ? '11' : '9'}px Inter, system-ui`;
+      ctx.fillStyle = '#f0f6fc';
+      ctx.textAlign = 'center';
+      const label = n.name.replace(/^(role_type_|behavior_|method_|norm_frame_|domain_|capability_|failure_mode_|simulation_outcome_)/, '');
+      ctx.fillText(label, n.x, n.y + n.radius + 12);
+    }
+    ctx.globalAlpha = 1;
+  });
+
+  ctx.restore();
+  simulate();
+  requestAnimationFrame(draw);
+}
+
+function screenToWorld(sx, sy) {
+  return { x: (sx - transform.x) / transform.scale, y: (sy - transform.y) / transform.scale };
+}
+
+function findNode(sx, sy) {
+  const { x, y } = screenToWorld(sx, sy);
+  let closest = null, minDist = Infinity;
+  nodes.forEach(n => {
+    if (!n.visible) return;
+    const d = Math.sqrt((n.x - x)**2 + (n.y - y)**2);
+    if (d < n.radius + 5 && d < minDist) { closest = n; minDist = d; }
+  });
+  return closest;
+}
+
+const tooltip = document.getElementById('tooltip');
+canvas.addEventListener('mousemove', e => {
+  const node = findNode(e.clientX, e.clientY);
+  hoveredNode = node;
+  if (node) {
+    tooltip.querySelector('.tt-title').textContent = node.name;
+    tooltip.querySelector('.tt-class').textContent = node.cls;
+    tooltip.querySelector('.tt-def').textContent = node.def;
+    tooltip.querySelector('.tt-papers').textContent = `Referenced in ${node.papers} paper(s)`;
+    tooltip.classList.add('visible');
+    const tx = Math.min(e.clientX + 15, W - 400);
+    const ty = Math.min(e.clientY + 15, H - 120);
+    tooltip.style.left = tx + 'px';
+    tooltip.style.top = ty + 'px';
+    canvas.style.cursor = 'pointer';
+  } else {
+    tooltip.classList.remove('visible');
+    canvas.style.cursor = 'grab';
+  }
+});
+
+canvas.addEventListener('click', e => {
+  const node = findNode(e.clientX, e.clientY);
+  if (node) {
+    selectedNode = node;
+    showInfoPanel(node);
+  } else {
+    selectedNode = null;
+    document.getElementById('info-panel').classList.remove('visible');
+  }
+});
+
+document.getElementById('close-panel').addEventListener('click', () => {
+  selectedNode = null;
+  document.getElementById('info-panel').classList.remove('visible');
+});
+
+function showInfoPanel(node) {
+  document.getElementById('panel-title').textContent = node.name;
+  document.getElementById('panel-class').textContent = node.cls;
+  document.getElementById('panel-def').textContent = node.def;
+
+  const relDiv = document.getElementById('panel-relations');
+  relDiv.innerHTML = '<div style="font-weight:600;margin-bottom:6px;color:#58a6ff;">Connections</div>';
+
+  const outgoing = triples.filter(t => t.subject === node.name && entities[t.object]);
+  const incoming = triples.filter(t => t.object === node.name && entities[t.subject]);
+
+  outgoing.forEach(t => {
+    relDiv.innerHTML += `<div class="rel-item"><span class="rel-label">→ ${t.relation.replace(/_/g,' ')}</span><span class="rel-target">${t.object}</span></div>`;
+  });
+  incoming.forEach(t => {
+    relDiv.innerHTML += `<div class="rel-item"><span class="rel-label">← ${t.relation.replace(/_/g,' ')}</span><span class="rel-target">${t.subject}</span></div>`;
+  });
+
+  if (outgoing.length === 0 && incoming.length === 0) {
+    relDiv.innerHTML += '<div style="opacity:0.5">No triples in current view</div>';
+  }
+
+  document.getElementById('info-panel').classList.add('visible');
+}
+
+let isPanning = false, panStart = { x: 0, y: 0 };
+let dragNode = null;
+
+canvas.addEventListener('mousedown', e => {
+  const node = findNode(e.clientX, e.clientY);
+  if (node) {
+    dragNode = node;
+    dragNode.dragging = true;
+  } else {
+    isPanning = true;
+    panStart = { x: e.clientX - transform.x, y: e.clientY - transform.y };
+    canvas.style.cursor = 'grabbing';
+  }
+});
+
+window.addEventListener('mousemove', e => {
+  if (dragNode) {
+    const { x, y } = screenToWorld(e.clientX, e.clientY);
+    dragNode.x = x; dragNode.y = y;
+    dragNode.vx = 0; dragNode.vy = 0;
+  }
+  if (isPanning) {
+    transform.x = e.clientX - panStart.x;
+    transform.y = e.clientY - panStart.y;
+  }
+});
+
+window.addEventListener('mouseup', () => {
+  if (dragNode) { dragNode.dragging = false; dragNode = null; }
+  isPanning = false;
+  canvas.style.cursor = 'grab';
+});
+
+canvas.addEventListener('wheel', e => {
+  e.preventDefault();
+  const scaleFactor = e.deltaY > 0 ? 0.92 : 1.08;
+  const { x: wx, y: wy } = screenToWorld(e.clientX, e.clientY);
+  transform.scale *= scaleFactor;
+  transform.x = e.clientX - wx * transform.scale;
+  transform.y = e.clientY - wy * transform.scale;
+}, { passive: false });
+
+const filterDiv = document.getElementById('filter-buttons');
+Object.keys(LAYER_MAP).forEach(layer => {
+  const btn = document.createElement('div');
+  btn.className = 'filter-btn active';
+  btn.textContent = layer;
+  btn.dataset.layer = layer;
+  btn.addEventListener('click', () => {
+    btn.classList.toggle('active');
+    updateFilters();
+  });
+  filterDiv.appendChild(btn);
+});
+
+function updateFilters() {
+  const activeLayers = new Set();
+  document.querySelectorAll('.filter-btn.active').forEach(b => {
+    LAYER_MAP[b.dataset.layer].forEach(cls => activeLayers.add(cls));
+  });
+
+  if (activeLayers.size === 0) {
+    nodes.forEach(n => n.visible = true);
+    return;
+  }
+
+  nodes.forEach(n => {
+    n.visible = activeLayers.has(n.cls);
+  });
+}
+
+draw();
+</script>
+</body>
+</html>

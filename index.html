@@ -6,6 +6,61 @@
   <title>Towards an Ontology of Normative Role Design for LLM interactions in Multi-Agent Simulations</title>
   <link rel="stylesheet" href="style.css">
   <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .hero {
+      position: relative;
+    }
+
+    .scroll-nudge {
+      position: absolute;
+      left: 1.5rem;
+      bottom: 1.75rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      padding: 0.85rem 0.55rem;
+      border-radius: 999px;
+      background: rgba(216, 236, 255, 0.92);
+      color: #2b5f96;
+      border: 1px solid #9cc9f5;
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      box-shadow: 0 10px 26px rgba(43, 95, 150, 0.16);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      animation: nudgeFloat 2.2s ease-in-out infinite;
+      z-index: 5;
+    }
+
+    .scroll-nudge:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(43, 95, 150, 0.22);
+      background: rgba(224, 242, 255, 0.98);
+      animation-play-state: paused;
+    }
+
+    .scroll-nudge .arrow {
+      font-size: 0.95rem;
+      line-height: 1;
+      opacity: 0.9;
+    }
+
+    @keyframes nudgeFloat {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-7px);
+      }
+    }
+
     .demo-header {
       display: flex;
       align-items: flex-start;
@@ -34,17 +89,39 @@
       background: #0d1117;
     }
 
+    @media (max-width: 900px) {
+      .scroll-nudge {
+        left: 1rem;
+        bottom: 1.25rem;
+        font-size: 0.76rem;
+      }
+    }
+
     @media (max-width: 768px) {
+      .scroll-nudge {
+        left: 0.75rem;
+        bottom: 1rem;
+        padding: 0.7rem 0.45rem;
+        font-size: 0.72rem;
+      }
+
       .demo-header {
         flex-direction: column;
         align-items: flex-start;
       }
+
       .demo-frame {
         height: 460px;
       }
     }
 
     @media (max-width: 480px) {
+      .scroll-nudge {
+        left: 0.5rem;
+        bottom: 0.75rem;
+        font-size: 0.68rem;
+      }
+
       .demo-frame {
         height: 360px;
       }
@@ -64,6 +141,7 @@
         <a href="conference.html" class="btn" rel="noopener">Conference Paper</a>
       </div>
     </div>
+    <a href="#demo" class="scroll-nudge" aria-label="Scroll down to the interactive graph section">Interactive graph <span class="arrow">↓</span></a>
   </header>
 
   <main>

@@ -21,17 +21,22 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.18rem;
+      gap: 0.45rem;
       color: #7fb6f0;
       text-decoration: none;
       font-size: 0.9rem;
-      font-weight: 600;
+      font-weight: 400;
       letter-spacing: 0.02em;
       line-height: 1;
       text-shadow: 0 0 14px rgba(127, 182, 240, 0.18);
       transition: transform 0.2s ease, color 0.2s ease, text-shadow 0.2s ease;
       animation: nudgeFloat 2.1s ease-in-out infinite;
       z-index: 5;
+      background: none;
+      border: 0;
+      box-shadow: none;
+      padding: 0;
+      border-radius: 0;
     }
 
     .scroll-nudge:hover {
@@ -45,17 +50,18 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.14rem;
+      gap: 0.32rem;
     }
 
     .scroll-nudge .stack span,
     .scroll-nudge .arrow {
       display: block;
+      font-weight: 400;
     }
 
     .scroll-nudge .arrow {
       font-size: 1rem;
-      margin-top: 0.18rem;
+      margin-top: 0.2rem;
     }
 
     @keyframes nudgeFloat {
@@ -144,6 +150,7 @@
       <div class="buttons">
         <a href="one-pager/index.html" class="btn" target="_blank" rel="noopener">One‑Pager Summary</a>
         <a href="conference.html" class="btn" rel="noopener">Conference Paper</a>
+        <a href="ontology-map.html" class="btn" target="_blank" rel="noopener">Interactive Graph</a>
       </div>
     </div>
     <a href="#demo" class="scroll-nudge" aria-label="Scroll down to the interactive graph section">

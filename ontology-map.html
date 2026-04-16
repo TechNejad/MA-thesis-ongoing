@@ -40,24 +40,33 @@ canvas#graph { width: 100vw; height: 100vh; display: block; }
 /* Desktop toggle tabs */
 .panel-tab {
   position: fixed; z-index: 101; cursor: pointer;
-  background: #1a1529ee; border: 1px solid #2d2640;
-  color: #8b949e; font-size: 11px; font-weight: 600;
-  letter-spacing: 0.5px; text-transform: uppercase;
+  background: rgba(26, 21, 41, 0.96); border: 1px solid rgba(240, 246, 252, 0.16);
+  color: #f0f6fc; font-size: 10px; font-weight: 600;
+  letter-spacing: 0.45px; text-transform: uppercase;
   backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
   transition: all 0.3s ease;
   display: flex; align-items: center; gap: 6px;
-  padding: 8px 12px;
+  padding: 7px 11px;
 }
-.panel-tab:hover { background: #231e35; color: #c9d1d9; }
+.panel-tab:hover {
+  background: rgba(35, 30, 53, 0.99);
+  border-color: rgba(240, 246, 252, 0.24);
+  color: #ffffff;
+}
 .panel-tab svg { transition: transform 0.3s ease; }
 
 #tab-controls {
-  top: 16px; right: 16px; border-radius: 8px;
+  top: 8px; right: 22px; border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 9px;
 }
 #tab-controls.hidden { right: 16px; }
 
 #tab-legend {
-  bottom: 16px; left: 16px; border-radius: 8px;
+  bottom: 2px; left: 22px; border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 9px;
 }
 #tab-legend.hidden { left: 16px; }
 
@@ -65,18 +74,17 @@ canvas#graph { width: 100vw; height: 100vh; display: block; }
 #controls {
   position: fixed; top: 16px; right: 16px;
   background: #1a1529ee; border: 1px solid #2d2640; border-radius: 12px;
-  padding: 16px; z-index: 100; width: 260px;
+  padding: 10px 14px 14px; z-index: 100; width: 244px;
   max-height: calc(100vh - 32px); overflow-y: auto;
   backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
   transition: transform 0.3s ease, opacity 0.3s ease;
 }
 #controls.hidden {
-  transform: translateX(calc(100% + 32px));
+  transform: translateX(calc(100% + 28px));
   opacity: 0; pointer-events: none;
 }
 #controls h3 {
-  font-size: 12px; font-weight: 600; color: #7b8fff;
-  text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 12px;
+  display: none;
 }
 .filter-section { margin-bottom: 14px; }
 .filter-section-title {
@@ -110,7 +118,7 @@ canvas#graph { width: 100vw; height: 100vh; display: block; }
 #legend {
   position: fixed; bottom: 16px; left: 16px;
   background: #1a1529ee; border: 1px solid #2d2640; border-radius: 12px;
-  padding: 14px 18px; z-index: 100;
+  padding: 14px 18px 24px; z-index: 100;
   backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
   max-width: 240px;
   transition: transform 0.3s ease, opacity 0.3s ease;
@@ -186,6 +194,11 @@ canvas#graph { width: 100vw; height: 100vh; display: block; }
   #header { padding: 10px 16px 10px; }
   #header h1 { font-size: 15px; max-width: calc(100vw - 70px); }
   #header p { font-size: 10px; }
+  #controls h3 {
+    display: block;
+    font-size: 12px; font-weight: 600; color: #7b8fff;
+    text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 12px;
+  }
   #controls {
     position: fixed; top: 0; right: -280px; width: 270px; height: 100vh;
     border-radius: 0; padding: 60px 16px 16px;

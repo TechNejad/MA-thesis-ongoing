@@ -10,7 +10,7 @@
 <p>
   <a href="https://technejad.github.io/MA-thesis-ongoing/"><img alt="Research Homepage" src="https://img.shields.io/badge/Research%20Homepage-253246?style=for-the-badge"></a>
   <a href="https://technejad.github.io/MA-thesis-ongoing/one-pager/"><img alt="One-Pager Summary" src="https://img.shields.io/badge/One--Pager%20Summary-253246?style=for-the-badge"></a>
-  <a href="https://technejad.github.io/MA-thesis-ongoing/conference.html"><img alt="Conference Page" src="https://img.shields.io/badge/Conference%20Page-253246?style=for-the-badge"></a>
+  <a href="https://technejad.github.io/MA-thesis-ongoing/conference.html"><img alt="Conference Paper" src="https://img.shields.io/badge/Conference%20Page-253246?style=for-the-badge"></a>
 </p>
 
 </div>

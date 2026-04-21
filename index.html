@@ -56,36 +56,34 @@
       }
     }
 
-    .button-disclosure {
+    .button-teaser {
       position: relative;
       display: inline-flex;
     }
 
-    .button-disclosure summary {
-      list-style: none;
-      cursor: pointer;
-    }
-
-    .button-disclosure summary::-webkit-details-marker {
-      display: none;
-    }
-
-    .button-disclosure summary:focus-visible {
-      outline: 2px solid #1a73e8;
-      outline-offset: 3px;
-    }
-
-    .button-disclosure .btn.btn-outline {
+    .button-teaser .btn.btn-outline {
       border: 1px solid #253246;
       background: #f7f3ea;
       color: #253246;
     }
 
-    .button-disclosure .btn.btn-outline:hover,
-    .button-disclosure .btn.btn-outline:focus-visible,
-    .button-disclosure[open] .btn.btn-outline {
+    .button-teaser .btn.btn-outline:hover,
+    .button-teaser .btn.btn-outline:focus-visible {
       background: #253246;
       color: #fff;
+    }
+
+    .button-teaser .btn.btn-outline {
+      font: inherit;
+      line-height: 1.2;
+      appearance: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+    }
+
+    .button-teaser .btn.btn-outline:focus-visible {
+      outline: 2px solid #1a73e8;
+      outline-offset: 3px;
     }
 
     .button-popover {
@@ -93,14 +91,14 @@
       top: calc(100% + 0.65rem);
       left: 50%;
       transform: translateX(-50%) translateY(-4px);
-      min-width: 260px;
-      max-width: min(320px, calc(100vw - 3rem));
-      padding: 0.8rem 0.95rem;
+      min-width: 210px;
+      max-width: min(260px, calc(100vw - 3rem));
+      padding: 0.75rem 0.9rem;
       border-radius: 16px;
       background: #253246;
       color: #fff;
-      font-size: 0.88rem;
-      line-height: 1.4;
+      font-size: 0.85rem;
+      line-height: 1.35;
       box-shadow: 0 14px 28px rgba(15, 23, 42, 0.16);
       opacity: 0;
       pointer-events: none;
@@ -120,9 +118,8 @@
       transform: translateX(-50%) rotate(45deg);
     }
 
-    .button-disclosure:hover .button-popover,
-    .button-disclosure:focus-within .button-popover,
-    .button-disclosure[open] .button-popover {
+    .button-teaser:hover .button-popover,
+    .button-teaser:focus-within .button-popover {
       opacity: 1;
       transform: translateX(-50%) translateY(0);
     }
@@ -179,9 +176,8 @@
         transform: rotate(45deg);
       }
 
-      .button-disclosure:hover .button-popover,
-      .button-disclosure:focus-within .button-popover,
-      .button-disclosure[open] .button-popover {
+      .button-teaser:hover .button-popover,
+      .button-teaser:focus-within .button-popover {
         transform: translateY(0);
       }
 
@@ -218,10 +214,10 @@
       <div class="buttons">
         <a href="one-pager/index.html" class="btn" target="_blank" rel="noopener">One-Pager Summary</a>
         <a href="conference.html" class="btn" rel="noopener">Conference Paper</a>
-        <details class="button-disclosure">
-          <summary class="btn btn-outline">Thesis Paper</summary>
-          <div class="button-popover">Available after thesis submission in late April 2026.</div>
-        </details>
+        <div class="button-teaser">
+          <button type="button" class="btn btn-outline" aria-describedby="thesis-paper-note">Thesis Paper</button>
+          <div id="thesis-paper-note" class="button-popover" role="status">Available late April 2026.</div>
+        </div>
         <a href="ontology-map.html" class="btn" target="_blank" rel="noopener">Interactive Graph</a>
       </div>
     </div>
@@ -250,7 +246,7 @@
           <li><strong>Systematic Literature Review.</strong> Identify and analyse multi-agent LLM simulation studies and their code to build
             the foundation of the ontology.</li>
           <li><strong>Five-Layer Coding.</strong> Code each study across: (a) study context, (b) simulation setup, (c) normative design
-            (role types, methods, ethics), (d) outcomes (behaviours, metrics) and (e) evidence (prompts, contradictions).</li>
+            (role types, methods, ethics) and (d) outcomes (behaviours, metrics) and (e) evidence (prompts, contradictions).</li>
           <li><strong>Ontology Construction.</strong> Formalise findings as knowledge triples to map role types, prompting methods,
             ethical framings and their relationships to outcomes.</li>
         </ul>

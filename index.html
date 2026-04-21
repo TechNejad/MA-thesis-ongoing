@@ -14,6 +14,13 @@
       position: relative;
     }
 
+    .hero .affiliation {
+      max-width: none;
+      white-space: nowrap;
+      font-size: clamp(1rem, 1.7vw, 1.18rem);
+      letter-spacing: -0.01em;
+    }
+
     .scroll-nudge {
       position: absolute;
       left: 1.3rem;
@@ -187,6 +194,11 @@
     }
 
     @media (max-width: 900px) {
+      .hero .affiliation {
+        white-space: normal;
+        font-size: 1.08rem;
+      }
+
       .scroll-nudge {
         left: 0.95rem;
         bottom: 1.15rem;
@@ -243,7 +255,7 @@
       <p class="authors">
         <a href="https://mohsen-hassan-nejad.netlify.app/" target="_blank" rel="noopener">Mohsen Hassan Nejad</a>
       </p>
-      <p class="affiliation">Master's in Artificial Intelligence for Sustainable Societies (AISS) - Ongoing thesis (2025-2026)</p>
+      <p class="affiliation">Master's in Artificial Intelligence for Sustainable Societies (AISS) – Ongoing Thesis Spring 2026</p>
       <div class="buttons">
         <a href="one-pager/index.html" class="btn" target="_blank" rel="noopener">One-Pager Summary</a>
         <a href="conference.html" class="btn" rel="noopener">Conference Paper</a>

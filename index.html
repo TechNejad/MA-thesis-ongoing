@@ -56,6 +56,77 @@
       }
     }
 
+    .button-disclosure {
+      position: relative;
+      display: inline-flex;
+    }
+
+    .button-disclosure summary {
+      list-style: none;
+      cursor: pointer;
+    }
+
+    .button-disclosure summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .button-disclosure summary:focus-visible {
+      outline: 2px solid #1a73e8;
+      outline-offset: 3px;
+    }
+
+    .button-disclosure .btn.btn-outline {
+      border: 1px solid #253246;
+      background: #f7f3ea;
+      color: #253246;
+    }
+
+    .button-disclosure .btn.btn-outline:hover,
+    .button-disclosure .btn.btn-outline:focus-visible,
+    .button-disclosure[open] .btn.btn-outline {
+      background: #253246;
+      color: #fff;
+    }
+
+    .button-popover {
+      position: absolute;
+      top: calc(100% + 0.65rem);
+      left: 50%;
+      transform: translateX(-50%) translateY(-4px);
+      min-width: 260px;
+      max-width: min(320px, calc(100vw - 3rem));
+      padding: 0.8rem 0.95rem;
+      border-radius: 16px;
+      background: #253246;
+      color: #fff;
+      font-size: 0.88rem;
+      line-height: 1.4;
+      box-shadow: 0 14px 28px rgba(15, 23, 42, 0.16);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      z-index: 10;
+      text-align: center;
+    }
+
+    .button-popover::before {
+      content: "";
+      position: absolute;
+      top: -6px;
+      left: 50%;
+      width: 12px;
+      height: 12px;
+      background: #253246;
+      transform: translateX(-50%) rotate(45deg);
+    }
+
+    .button-disclosure:hover .button-popover,
+    .button-disclosure:focus-within .button-popover,
+    .button-disclosure[open] .button-popover {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
     .demo-header {
       display: flex;
       align-items: flex-start;
@@ -97,6 +168,23 @@
         bottom: 0.95rem;
       }
 
+      .button-popover {
+        left: 0;
+        transform: translateY(-4px);
+        text-align: left;
+      }
+
+      .button-popover::before {
+        left: 32px;
+        transform: rotate(45deg);
+      }
+
+      .button-disclosure:hover .button-popover,
+      .button-disclosure:focus-within .button-popover,
+      .button-disclosure[open] .button-popover {
+        transform: translateY(0);
+      }
+
       .demo-header {
         flex-direction: column;
         align-items: flex-start;
@@ -126,10 +214,14 @@
       <p class="authors">
         <a href="https://mohsen-hassan-nejad.netlify.app/" target="_blank" rel="noopener">Mohsen Hassan Nejad</a>
       </p>
-      <p class="affiliation">Erasmus Mundus Joint Master's Scholarship in Artificial Intelligence for Sustainable Societies (AISS) – Ongoing thesis (2025–2026)</p>
+      <p class="affiliation">Erasmus Mundus Joint Master's Scholarship in Artificial Intelligence for Sustainable Societies (AISS) - Ongoing thesis (2025-2026)</p>
       <div class="buttons">
-        <a href="one-pager/index.html" class="btn" target="_blank" rel="noopener">One‑Pager Summary</a>
+        <a href="one-pager/index.html" class="btn" target="_blank" rel="noopener">One-Pager Summary</a>
         <a href="conference.html" class="btn" rel="noopener">Conference Paper</a>
+        <details class="button-disclosure">
+          <summary class="btn btn-outline">Thesis Paper</summary>
+          <div class="button-popover">Available after thesis submission in late April 2026.</div>
+        </details>
         <a href="ontology-map.html" class="btn" target="_blank" rel="noopener">Interactive Graph</a>
       </div>
     </div>
@@ -144,7 +236,7 @@
         <h2>Abstract</h2>
         <p>
           Ongoing master's thesis exploring how normative roles for large language models are defined and
-          operationalized within multi‑agent simulations. As LLMs evolve into autonomous agents, their roles are encoded via system prompts, yet
+          operationalized within multi-agent simulations. As LLMs evolve into autonomous agents, their roles are encoded via system prompts, yet
           development and evaluation remain ad hoc and unsystematic. This project aims to develop a preliminary ontology of normative role
           design by mapping how roles are operationalized and how they shape outcomes.
         </p>
@@ -155,9 +247,9 @@
       <div class="container">
         <h2>Research Approach</h2>
         <ul>
-          <li><strong>Systematic Literature Review.</strong> Identify and analyse multi‑agent LLM simulation studies and their code to build
+          <li><strong>Systematic Literature Review.</strong> Identify and analyse multi-agent LLM simulation studies and their code to build
             the foundation of the ontology.</li>
-          <li><strong>Five‑Layer Coding.</strong> Code each study across: (a) study context, (b) simulation setup, (c) normative design
+          <li><strong>Five-Layer Coding.</strong> Code each study across: (a) study context, (b) simulation setup, (c) normative design
             (role types, methods, ethics), (d) outcomes (behaviours, metrics) and (e) evidence (prompts, contradictions).</li>
           <li><strong>Ontology Construction.</strong> Formalise findings as knowledge triples to map role types, prompting methods,
             ethical framings and their relationships to outcomes.</li>

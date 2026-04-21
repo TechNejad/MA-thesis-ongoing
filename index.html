@@ -128,19 +128,46 @@
     }
 
     .demo-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 1rem;
-      margin-bottom: 1.25rem;
+      margin-bottom: 1rem;
     }
 
     .demo-intro {
       max-width: 720px;
     }
 
-    .demo-cta {
-      margin-top: 0.45rem;
+    .demo-frame-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 0.55rem;
+    }
+
+    .demo-frame-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      color: #1a73e8;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      line-height: 1.2;
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .demo-frame-link:hover,
+    .demo-frame-link:focus-visible {
+      color: #1558b0;
+      transform: translateY(-1px);
+    }
+
+    .demo-frame-link:focus-visible {
+      outline: 2px solid #1a73e8;
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    .demo-frame-link-icon {
+      font-size: 0.95rem;
+      line-height: 1;
     }
 
     .demo-frame-wrap {
@@ -188,13 +215,8 @@
         transform: translateY(0);
       }
 
-      .demo-header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .demo-cta {
-        margin-top: 0.2rem;
+      .demo-frame-actions {
+        margin-bottom: 0.45rem;
       }
 
       .demo-frame {
@@ -259,7 +281,13 @@
               Explore the ontology graph showing the entities, relationships, and connections identified in the current version of the ontology. This view will continue to expand and sharpen as the thesis progresses.
             </p>
           </div>
-          <a href="ontology-map.html" class="btn demo-cta" target="_blank" rel="noopener" aria-label="Open the ontology map in full-screen view in a new tab">Full-Screen View</a>
+        </div>
+
+        <div class="demo-frame-actions">
+          <a href="ontology-map.html" class="demo-frame-link" target="_blank" rel="noopener" aria-label="Open full screen view of the ontology map in a new tab">
+            <span>Full Screen View</span>
+            <span class="demo-frame-link-icon" aria-hidden="true">↗</span>
+          </a>
         </div>
 
         <div class="demo-frame-wrap">

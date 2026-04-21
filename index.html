@@ -63,6 +63,24 @@
       }
     }
 
+    @keyframes demoLinkJiggle {
+      0%, 82%, 100% {
+        transform: translate3d(0, 0, 0) rotate(0deg);
+      }
+      85% {
+        transform: translate3d(-0.7px, 0.25px, 0) rotate(-0.45deg);
+      }
+      88% {
+        transform: translate3d(0.8px, -0.3px, 0) rotate(0.45deg);
+      }
+      91% {
+        transform: translate3d(-0.5px, 0.2px, 0) rotate(-0.25deg);
+      }
+      94% {
+        transform: translate3d(0.35px, -0.15px, 0) rotate(0.18deg);
+      }
+    }
+
     .button-teaser {
       position: relative;
       display: inline-flex;
@@ -151,18 +169,31 @@
     .demo-frame-link {
       display: inline-flex;
       align-items: center;
-      gap: 0.35rem;
       color: #1a73e8;
       text-decoration: none;
       font-size: 0.95rem;
       font-weight: 500;
       line-height: 1.2;
-      transition: color 0.2s ease, transform 0.2s ease;
+      transition: color 0.2s ease;
+    }
+
+    .demo-frame-link-inner {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      animation: demoLinkJiggle 3.6s ease-in-out infinite;
+      transform-origin: center;
+      will-change: transform;
     }
 
     .demo-frame-link:hover,
     .demo-frame-link:focus-visible {
       color: #1558b0;
+    }
+
+    .demo-frame-link:hover .demo-frame-link-inner,
+    .demo-frame-link:focus-visible .demo-frame-link-inner {
+      animation-play-state: paused;
       transform: translateY(-1px);
     }
 
@@ -191,6 +222,12 @@
       height: 560px;
       border: 0;
       background: #0d1117;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .demo-frame-link-inner {
+        animation: none;
+      }
     }
 
     @media (max-width: 900px) {
@@ -297,8 +334,10 @@
 
         <div class="demo-frame-actions">
           <a href="ontology-map.html" class="demo-frame-link" target="_blank" rel="noopener" aria-label="Open full screen view of the ontology map in a new tab">
-            <span>Full Screen View</span>
-            <span class="demo-frame-link-icon" aria-hidden="true">↗</span>
+            <span class="demo-frame-link-inner">
+              <span>Full Screen View</span>
+              <span class="demo-frame-link-icon" aria-hidden="true">↗</span>
+            </span>
           </a>
         </div>
 

@@ -169,6 +169,56 @@ body {
   background-color: #1558b0;
 }
 
+/* Keywords block (abstract section) */
+.keywords {
+  display: block;
+  margin-top: 1.4rem;
+  font-family: inherit;
+}
+.keywords-label {
+  display: block;
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: #8a94a5;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.45rem;
+}
+.section ul.keyword-list,
+.keyword-list {
+  list-style: none;
+  padding-left: 0;
+  padding: 0;
+  margin: 0;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: #8a94a5;
+  line-height: 1.6;
+}
+.section li.keyword,
+.keyword-list li {
+  display: inline;
+  padding: 0;
+  background: none;
+  border: 0;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 400;
+  color: #8a94a5;
+}
+.keyword-list li::after {
+  content: "  \00B7  ";
+  color: #8a94a5;
+  margin: 0 0.15rem;
+  font-weight: 400;
+}
+.keyword-list li:last-child::after {
+  content: "";
+}
+
 /* Additional styling for disclaimer page */
 .disclaimer-section {
   padding: 4rem 0;

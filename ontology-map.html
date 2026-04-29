@@ -940,7 +940,7 @@ function toggleDesktopControls() {
   const panel = document.getElementById('controls');
   const tab = document.getElementById('tab-controls');
   const isHidden = panel.classList.toggle('hidden');
-  tab.classList.toggle('hidden', isHidden);
+  tab.classList.toggle('hidden', isHidden)
   const chevron = tab.querySelector('.chevron');
   chevron.style.transform = isHidden ? 'rotate(180deg)' : '';
 }
